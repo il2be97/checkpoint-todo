@@ -4,6 +4,7 @@ import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_icons.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/features/habit/domain/entities/player.dart';
+import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/home_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/home_state.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
@@ -85,6 +86,7 @@ class _PlayerCard extends StatelessWidget {
       ),
       child: Column(
         children: [
+          // User Part
           Row(
             children: [
               Expanded(flex: 2, child: SvgPicture.asset(AppIcons.player)),
@@ -103,7 +105,7 @@ class _PlayerCard extends StatelessWidget {
                     Text(player.name, style: textTheme.headlineSmall),
                     const SizedBox(height: AppPaddings.s),
                     Row(
-                      children: List.generate(player.maxHelath, (index) {
+                      children: List.generate(player.maxHealth, (index) {
                         return Padding(
                           padding: const .symmetric(horizontal: AppPaddings.xs),
                           child: SvgPicture.asset(
@@ -121,7 +123,7 @@ class _PlayerCard extends StatelessWidget {
                       LocaleKeys.home_hp_status.tr(
                         namedArgs: {
                           'current': player.health.toString(),
-                          'max': player.maxHelath.toString(),
+                          'max': player.maxHealth.toString(),
                         },
                       ),
                       style: textTheme.labelSmall,
@@ -130,6 +132,76 @@ class _PlayerCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Divider(color: colorScheme.outlineVariant),
+          // Level Part
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: .start,
+                  children: [
+                    Text(
+                      LocaleKeys.home_total_streak.tr().toUpperCase(),
+                      style: textTheme.labelSmall,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: textTheme.labelSmall,
+                        children: [
+                          WidgetSpan(
+                            child: SvgPicture.asset(
+                              AppIcons.flame,
+                              colorFilter: ColorFilter.mode(
+                                colorScheme.primary,
+                                .srcIn,
+                              ),
+                            ),
+                          ),
+                          TextSpan(
+                            text: " ${player.streak.toString()} ",
+                            style: textTheme.titleMedium,
+                          ),
+                          TextSpan(
+                            text: LocaleKeys.home_total_streak_on_fire.tr(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                VerticalDivider(color: colorScheme.outlineVariant),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: .start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          Text(player.progress.currentExpFormatted),
+                          Text(
+                            '/${LocaleKeys.home_exp.tr(namedArgs: {"exp": player.progress.maxExpFormatted})}',
+                            style: textTheme.labelSmall,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppPaddings.s),
+                      LinearProgressIndicator(value: player.progress.progress),
+                      const SizedBox(height: AppPaddings.s),
+                      Text(
+                        LocaleKeys.home_exp_to_next_level.tr(
+                          namedArgs: {
+                            "current": player.progress.remainProgress,
+                            "level": player.progress.nextLevel.toString(),
+                          },
+                        ),
+                        style: textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -179,5 +251,29 @@ class _Empty extends StatelessWidget {
 extension on DateTime {
   String get formatted {
     return DateFormat('EEEE, MMM d').format(this);
+  }
+}
+
+extension on PlayerProgress {
+  String get maxExpFormatted {
+    final formatter = NumberFormat('#,###', 'en_US');
+    return formatter.format(maxExp);
+  }
+
+  String get currentExpFormatted {
+    final formatter = NumberFormat('#,###', 'en_US');
+    return formatter.format(currentExp);
+  }
+
+  double get progress {
+    return currentExp / maxExp;
+  }
+
+  String get remainProgress {
+    return (maxExp - currentExp).toStringAsFixed(0);
+  }
+
+  int get nextLevel {
+    return level + 1;
   }
 }

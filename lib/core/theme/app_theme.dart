@@ -44,10 +44,18 @@ abstract final class AppTheme {
       unselectedLabelColor: Colors.grey.shade400,
       dividerColor: Colors.transparent,
     ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: _primaryColor,
+      linearTrackColor: Color(0xFF25344C),
+      linearMinHeight: 6.0,
+
+      borderRadius: BorderRadius.all(Radius.circular(6)),
+    ),
     navigationBarTheme: NavigationBarThemeData(
       indicatorShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
+
       backgroundColor: _surfaceBgColor,
       indicatorColor: _primaryColor.withValues(alpha: 0.2),
       iconTheme: WidgetStateProperty.resolveWith((states) {

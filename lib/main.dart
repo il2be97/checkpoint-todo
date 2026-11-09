@@ -7,10 +7,8 @@ import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  EasyLocalization.logger.enableLevels = [.error, .warning];
   await EasyLocalization.ensureInitialized();
   await initializeDateFormatting();
-
   await configureDependencies();
 
   runApp(

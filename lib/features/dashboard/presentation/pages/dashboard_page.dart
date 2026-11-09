@@ -28,18 +28,24 @@ class DashboardPage extends StatelessWidget {
       ),
       child: Scaffold(
         body: shell,
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: shell.currentIndex,
-          onDestinationSelected: (index) =>
-              context.read<DashboardCubit>().changePage(.fromInt(index)),
-          destinations: [
-            _Destination(icon: Icons.home, label: LocaleKeys.nav_home.tr()),
-            _Destination(
-              icon: Icons.list_outlined,
-              label: LocaleKeys.nav_habits.tr(),
+        bottomNavigationBar: Column(
+          mainAxisSize: .min,
+          children: [
+            Divider(color: ColorScheme.of(context).outlineVariant),
+            NavigationBar(
+              selectedIndex: shell.currentIndex,
+              onDestinationSelected: (index) =>
+                  context.read<DashboardCubit>().changePage(.fromInt(index)),
+              destinations: [
+                _Destination(icon: Icons.home, label: LocaleKeys.nav_home.tr()),
+                _Destination(
+                  icon: Icons.list_outlined,
+                  label: LocaleKeys.nav_habits.tr(),
+                ),
+                // TODO: - Return back later
+                // _Destination(icon: Icons.settings, label: 'Settings'),
+              ],
             ),
-            // TODO: - Return back later
-            // _Destination(icon: Icons.settings, label: 'Settings'),
           ],
         ),
       ),

@@ -1,38 +1,27 @@
+import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
+
 class Player {
-  final int maxHelath;
+  final int maxHealth;
   final double health;
   final String name;
   final PlayerProgress progress;
+  final int streak;
 
   Player({
-    required this.maxHelath,
+    required this.maxHealth,
     required this.health,
     required this.name,
     required this.progress,
+    required this.streak,
   });
 
   factory Player.mock() {
     return Player(
-      maxHelath: 5,
+      maxHealth: 5,
       health: 3,
+      streak: 1,
       name: '-',
       progress: PlayerProgress.mock(),
     );
-  }
-}
-
-class PlayerProgress {
-  final double maxExp;
-  final double currentExp;
-  final int level;
-
-  PlayerProgress({
-    required this.maxExp,
-    required this.currentExp,
-    required this.level,
-  });
-
-  factory PlayerProgress.mock() {
-    return PlayerProgress(maxExp: 1000, currentExp: 0, level: 1);
   }
 }

@@ -9,6 +9,10 @@ abstract class  LocaleKeys {
   static const home_title = 'home.title';
   static const home_level_beginner = 'home.level_beginner';
   static const home_level_explorer = 'home.level_explorer';
+  static const home_total_streak = 'home.total_streak';
+  static const home_total_streak_on_fire = 'home.total_streak_on_fire';
+  static const home_exp = 'home.exp';
+  static const home_exp_to_next_level = 'home.exp_to_next_level';
   static const home_unknown = 'home.unknown';
   static const home_hp_status = 'home.hp_status';
   static const home_todays_missions = 'home.todays_missions';
