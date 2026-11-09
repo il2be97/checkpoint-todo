@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Home",
+    "habits": "Habits"
+  },
+  "home": {
+    "title": "Keep your orbit",
+    "level_beginner": "Level {level} Beginner",
+    "level_explorer": "Level {level} Explorer",
+    "unknown": "Unknown",
+    "hp_status": "{current}/{max} HP • Stay in the game",
+    "todays_missions": "Today's missions",
+    "empty": "No mission available"
+  },
+  "habits": {
+    "subtitle": "BUILD YOUR ORBIT",
+    "title": "My Habits",
+    "tab": {
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "empty": "No mission available"
+  }
+}
