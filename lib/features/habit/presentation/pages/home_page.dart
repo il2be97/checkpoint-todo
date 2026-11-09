@@ -61,7 +61,7 @@ class _PlayerCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    final levelDescription = switch (player.level.toInt()) {
+    final levelDescription = switch (player.progress.level) {
       int l when l >= 1 && l <= 3 => LocaleKeys.home_level_beginner.tr(
         namedArgs: {'level': l.toString()},
       ),
