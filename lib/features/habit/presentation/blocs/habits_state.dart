@@ -1,6 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'habits_state.freezed.dart';
+part of 'habits_cubit.dart';
 
 enum HabitTab { active, archived }
 
@@ -17,7 +15,7 @@ sealed class HabitsState with _$HabitsState {
   const factory HabitsState.failed({
     required HabitTab tab,
     required Error err,
-  }) = HabbitsFailed;
+  }) = HabitsFailed;
 }
 
 extension HabitsStateX on HabitsState {

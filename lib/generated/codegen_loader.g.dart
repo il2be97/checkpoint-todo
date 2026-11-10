@@ -20,26 +20,44 @@ class CodegenLoader extends AssetLoader{
     "habits": "Habits"
   },
   "home": {
-    "title": "Keep your orbit",
-    "level_beginner": "Level {level} Beginner",
-    "level_explorer": "Level {level} Explorer",
+    "title": "Defend your streak.",
+    "level_peasant": "Level {level} Peasant",
+    "level_ragged_knight": "Level {level} Ragged Knight",
+    "level_steel_knight": "Level {level} Steel Knight",
+    "level_veteran_paladin": "Level {level} Veteran Paladin",
+    "level_grandmaster": "Level {level} Grandmaster",
     "total_streak": "total active streaks",
     "total_streak_on_fire": "on fire",
     "exp": "{exp} HP",
     "exp_to_next_level": "{current} XP to level {level}",
     "unknown": "Unknown",
     "hp_status": "{current}/{max} HP • Stay in the game",
-    "todays_missions": "Today's missions",
-    "empty": "No mission available"
+    "todays_missions": "Today's missions"
   },
   "habits": {
-    "subtitle": "BUILD YOUR ORBIT",
+    "subtitle": "keep the flame",
     "title": "My Habits",
     "tab": {
       "active": "Active",
       "archived": "Archived"
+    }
+  },
+  "empty_card": {
+    "open_habits": {
+      "title": "No Quest Active Yet",
+      "subtitle": "Your knight is resting. Go to the Habits tab to create your first daily routine and protect your HP!",
+      "button": "Go to Habits"
     },
-    "empty": "No mission available"
+    "create_habits": {
+      "title": "Your first quest starts here",
+      "subtitle": "Build a routine, one small habit at a time. Complete daily quests to earn XP and evolve your knight.",
+      "button": "+ Create First Habit"
+    },
+    "archive_habits": {
+      "title": "No archived quests yet",
+      "subtitle": "Taking a break from a habit? Archive it to keep your progress safe. Restore it whenever you’re ready.",
+      "button": "View Active Habits"
+    }
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en};

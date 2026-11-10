@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppTheme {
-  static const Color _primaryColor = Color(0xFFFF8A00);
+  static const Color _primaryColor = Color(0xFFF97316);
   static const Color _secondaryColor = Color(0xFF94A3B8);
   static const Color _surfaceBgColor = Color(0xFF10182B);
   static const Color _surfaceContainer = Color(0xFF1C293E);
@@ -44,6 +44,15 @@ abstract final class AppTheme {
       unselectedLabelColor: Colors.grey.shade400,
       dividerColor: Colors.transparent,
     ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: _primaryColor,
+        foregroundColor: Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: _primaryColor,
       linearTrackColor: Color(0xFF25344C),
@@ -63,6 +72,7 @@ abstract final class AppTheme {
             ? const IconThemeData(color: _primaryColor)
             : const IconThemeData(color: _secondaryColor);
       }),
+
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         return states.isSelected
             ? const TextStyle(

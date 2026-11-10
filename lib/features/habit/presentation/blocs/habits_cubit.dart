@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/habits_state.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'habits_state.dart';
+part 'habits_cubit.freezed.dart';
 
 class HabitsCubit extends Cubit<HabitsState> {
-  HabitsCubit() : super(const HabitsInitial());
+  HabitsCubit() : super(const .initial());
 
   Future<void> load() async {}
 

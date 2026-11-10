@@ -1,7 +1,6 @@
 import 'package:checkpoint/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:checkpoint/features/habit/presentation/pages/habits_page.dart';
 import 'package:checkpoint/features/habit/presentation/pages/home_page.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(

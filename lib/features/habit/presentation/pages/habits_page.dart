@@ -1,9 +1,10 @@
 import 'package:checkpoint/core/injection/injection.dart';
 import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
 import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
+import 'package:checkpoint/core/theme/app_decoration.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/habits_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/habits_state.dart';
+import 'package:checkpoint/features/habit/presentation/widgets/empty_quests_card.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
                 return [
                   AppSliverAppBar(
                     title: LocaleKeys.habits_title.tr(),
-                    subtitle: LocaleKeys.habits_subtitle.toUpperCase(),
+                    subtitle: LocaleKeys.habits_subtitle.tr().toUpperCase(),
                   ),
                   SliverPadding(
                     padding: const .symmetric(horizontal: AppPaddings.m),
@@ -58,11 +59,29 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
                       child: _HabitTabBar(controller: _tabController),
                     ),
                   ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: AppPaddings.m),
+                  ),
                 ];
               },
               body: TabBarView(
                 controller: _tabController,
-                children: const [_Empty(), _Empty()],
+                children: [
+                  Center(
+                    child: EmptyQuestsCard(
+                      type: .createHabit,
+                      onPressed: () {},
+                      level: .ragged,
+                    ),
+                  ),
+                  Center(
+                    child: EmptyQuestsCard(
+                      type: .archiveHabits,
+                      onPressed: () {},
+                      level: .ragged,
+                    ),
+                  ),
+                ],
               ),
             ),
           );
@@ -72,39 +91,39 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
   }
 }
 
+class _ActivePage extends StatelessWidget {
+  const _ActivePage();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+class ArchivedPage extends StatelessWidget {
+  const ArchivedPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
 class _HabitTabBar extends StatelessWidget {
   const _HabitTabBar({required this.controller});
   final TabController controller;
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.of(context);
     return Container(
       clipBehavior: .hardEdge,
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(24),
-      ),
+      decoration: AppDecoration.forCard(context),
       child: TabBar(
         controller: controller,
         tabs: [
           Tab(text: LocaleKeys.habits_tab_active.tr()),
           Tab(text: LocaleKeys.habits_tab_archived.tr()),
         ],
-      ),
-    );
-  }
-}
-
-class _Empty extends StatelessWidget {
-  const _Empty();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        LocaleKeys.habits_empty.tr(),
-        style: TextTheme.of(context).headlineMedium,
       ),
     );
   }

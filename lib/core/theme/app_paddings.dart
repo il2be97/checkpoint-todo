@@ -1,4 +1,7 @@
 abstract final class AppPaddings {
+  /// 20.0
+  static const l = 20.0;
+
   /// 16.0
   static const m = 16.0;
 
