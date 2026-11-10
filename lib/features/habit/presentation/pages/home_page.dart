@@ -2,10 +2,10 @@ import 'package:checkpoint/core/injection/injection.dart';
 import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
 import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
 import 'package:checkpoint/features/habit/domain/entities/quest.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/active_quests_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
+import 'package:checkpoint/features/habit/presentation/blocs/quests_cubit.dart';
 
 import 'package:checkpoint/features/habit/presentation/widgets/empty_quests_card.dart';
 import 'package:checkpoint/features/habit/presentation/widgets/player_card.dart';
@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
   static Widget create() {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<ActiveQuestsCubit>()..load()),
+        BlocProvider(create: (context) => sl<QuestsCubit>()..load()),
         BlocProvider(create: (context) => sl<PlayerCubit>()..load()),
       ],
       child: const HomePage(),

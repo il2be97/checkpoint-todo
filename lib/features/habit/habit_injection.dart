@@ -32,6 +32,6 @@ Future<void> injectHabit(GetIt sl) async {
   // Cubits
   sl.registerFactory<PlayerCubit>(() => PlayerCubit(sl()));
   sl.registerFactory<ActiveQuestsCubit>(() => ActiveQuestsCubit(sl()));
-  sl.registerFactory<QuestsCubit>(() => QuestsCubit());
+  sl.registerFactory<QuestsCubit>(() => QuestsCubit(sl()));
   sl.registerFactory<ArchivedHabitsCubit>(() => ArchivedHabitsCubit());
 }
