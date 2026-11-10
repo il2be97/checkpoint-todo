@@ -15,7 +15,7 @@ class HabitsPage extends StatefulWidget {
 
   static Widget create() {
     return BlocProvider(
-      create: (context) => sl<HabitsCubit>(),
+      create: (context) => sl<HabitsCubit>()..load(),
       child: const HabitsPage(),
     );
   }

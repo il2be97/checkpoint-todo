@@ -23,5 +23,5 @@ extension PlayerOverviewStateX on PlayerOverviewState {
       : [];
 
   bool get isLoading =>
-      this is PlayerOverviewStateInitial || this is PlayerOverviewStateLoaded;
+      this is PlayerOverviewStateInitial || this is PlayerOverviewStateLoading;
 }

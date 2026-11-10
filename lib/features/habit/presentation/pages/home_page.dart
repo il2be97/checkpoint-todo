@@ -4,7 +4,6 @@ import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
 import 'package:checkpoint/features/habit/domain/entities/quest.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/player_overview_cubit.dart';
 
 import 'package:checkpoint/features/habit/presentation/widgets/empty_quests_card.dart';
