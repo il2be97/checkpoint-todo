@@ -5,6 +5,7 @@ class Quest {
   final int bestStreak;
   final int exp;
   final int totalDays;
+  final bool completed;
 
   Quest({
     required this.title,
@@ -13,5 +14,6 @@ class Quest {
     required this.bestStreak,
     required this.exp,
     required this.totalDays,
+    required this.completed,
   });
 }

@@ -16,6 +16,10 @@ abstract final class AppTheme {
       surfaceContainer: _surfaceContainer,
       outlineVariant: _outlineVariant,
     ),
+    dividerTheme: const DividerThemeData(
+      color: _outlineVariant,
+      space: .minPositive,
+    ),
     textTheme: const TextTheme(
       headlineMedium: TextStyle(
         fontSize: 28,
@@ -31,13 +35,14 @@ abstract final class AppTheme {
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: _surfaceBgColor,
+      shadowColor: _surfaceBgColor,
+      scrolledUnderElevation: 2,
       surfaceTintColor: Colors.transparent,
-      elevation: 0,
     ),
     tabBarTheme: TabBarThemeData(
       indicatorSize: TabBarIndicatorSize.tab,
       indicator: BoxDecoration(
-        color: const Color(0xFF1E2633),
+        color: const Color(0xFF25344C),
         borderRadius: BorderRadius.circular(20),
       ),
       labelColor: Colors.white,
@@ -57,7 +62,6 @@ abstract final class AppTheme {
       color: _primaryColor,
       linearTrackColor: Color(0xFF25344C),
       linearMinHeight: 6.0,
-
       borderRadius: BorderRadius.all(Radius.circular(6)),
     ),
     navigationBarTheme: NavigationBarThemeData(

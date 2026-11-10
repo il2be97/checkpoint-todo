@@ -2,9 +2,11 @@ import 'package:checkpoint/core/theme/app_decoration.dart';
 import 'package:checkpoint/core/theme/app_icons.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
+import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 enum EmptyQuestsCardType { openHabbits, createHabit, archiveHabits }
@@ -14,15 +16,14 @@ class EmptyQuestsCard extends StatelessWidget {
     super.key,
     required this.type,
     required this.onPressed,
-    required this.level,
   });
 
   final EmptyQuestsCardType type;
   final VoidCallback onPressed;
-  final PlayerLevel level;
 
   @override
   Widget build(BuildContext context) {
+    final level = context.watch<PlayerCubit>().state.uPlayer.progress.levelType;
     final textTheme = TextTheme.of(context);
     return Container(
       decoration: AppDecoration.forCard(context),

@@ -7,4 +7,14 @@ class QuestRepository extends IQuestRepository {
   TaskEither<Error, List<Quest>> read(DateTime date) {
     return .right([]);
   }
+
+  @override
+  TaskEither<Error, List<Quest>> readActive() {
+    return .right([]);
+  }
+
+  @override
+  TaskEither<Error, List<Quest>> readArchived() {
+    return .right([]);
+  }
 }

@@ -20,14 +20,10 @@ class PlayerCard extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Container(
-      margin: const .only(
-        left: AppPaddings.m,
-        right: AppPaddings.m,
-        bottom: AppPaddings.m,
-      ),
       padding: const .all(AppPaddings.m),
       decoration: AppDecoration.forCard(context),
       child: Column(
+        spacing: AppPaddings.s,
         children: [
           // User Part
           Row(
@@ -79,10 +75,11 @@ class PlayerCard extends StatelessWidget {
               ),
             ],
           ),
-          Divider(color: colorScheme.outlineVariant),
+          const Divider(),
           // Level Part
           IntrinsicHeight(
             child: Row(
+              spacing: AppPaddings.m,
               children: [
                 Column(
                   crossAxisAlignment: .start,
@@ -117,7 +114,7 @@ class PlayerCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                VerticalDivider(color: colorScheme.outlineVariant),
+                const VerticalDivider(),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: .start,
@@ -202,13 +199,9 @@ extension on PlayerProgress {
   String get iconPath {
     return switch (levelType) {
       PlayerLevel.peasant => AppIcons.peasant,
-
       PlayerLevel.ragged => AppIcons.ragged,
-
       PlayerLevel.steel => AppIcons.steel,
-
       PlayerLevel.veteran => AppIcons.veteran,
-
       PlayerLevel.grandmaster => AppIcons.grandmaster,
     };
   }

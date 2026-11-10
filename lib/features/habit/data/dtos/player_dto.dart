@@ -8,7 +8,7 @@ part 'player_dto.g.dart';
 abstract class PlayerDTO with _$PlayerDTO {
   const factory PlayerDTO({
     required int maxHealth,
-    required double health,
+    required int health,
     required String name,
     required int streak,
     required PlayerProgressDTO progress,

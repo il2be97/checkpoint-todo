@@ -2,7 +2,7 @@ import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
 
 class Player {
   final int maxHealth;
-  final double health;
+  final int health;
   final String name;
   final PlayerProgress progress;
   final int streak;

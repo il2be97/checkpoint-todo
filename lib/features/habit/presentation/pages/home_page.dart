@@ -4,7 +4,8 @@ import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
 import 'package:checkpoint/features/habit/domain/entities/quest.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/player_overview_cubit.dart';
+import 'package:checkpoint/features/habit/presentation/blocs/active_quests_cubit.dart';
+import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
 
 import 'package:checkpoint/features/habit/presentation/widgets/empty_quests_card.dart';
 import 'package:checkpoint/features/habit/presentation/widgets/player_card.dart';
@@ -12,13 +13,17 @@ import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   static Widget create() {
-    return BlocProvider(
-      create: (context) => sl<PlayerOverviewCubit>()..load(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sl<ActiveQuestsCubit>()..load()),
+        BlocProvider(create: (context) => sl<PlayerCubit>()..load()),
+      ],
       child: const HomePage(),
     );
   }
@@ -26,66 +31,66 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
+    final playerState = context.watch<PlayerCubit>().state;
+    final questsState = context.watch<ActiveQuestsCubit>().state;
 
     return Scaffold(
-      body: BlocBuilder<PlayerOverviewCubit, PlayerOverviewState>(
-        builder: (context, state) {
-          return AppShimmer(
-            isLoading: state.isLoading,
-            child: CustomScrollView(
-              slivers: [
-                AppSliverAppBar(
-                  title: LocaleKeys.home_title.tr(),
-                  subtitle: now.formatted.toUpperCase(),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: AppPaddings.s),
-                ),
-                SliverToBoxAdapter(child: PlayerCard(state.uPlayer)),
-                SliverToBoxAdapter(
-                  child: _Quests(
-                    state.uQuests,
-                    state.uPlayer.progress.levelType,
-                  ),
-                ),
-              ],
+      body: AppShimmer(
+        isLoading: playerState.isLoading || questsState.isLoading,
+        child: CustomScrollView(
+          slivers: [
+            AppSliverAppBar(
+              title: LocaleKeys.home_title.tr(),
+              subtitle: now.formatted.toUpperCase(),
             ),
-          );
-        },
+            const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.s)),
+            SliverPadding(
+              padding: const .symmetric(horizontal: AppPaddings.m),
+              sliver: SliverToBoxAdapter(
+                child: PlayerCard(playerState.uPlayer),
+              ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
+            SliverPadding(
+              padding: const .symmetric(horizontal: AppPaddings.m),
+              sliver: SliverToBoxAdapter(child: _Quests(questsState.uQuest)),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
+          ],
+        ),
       ),
     );
   }
 }
 
 class _Quests extends StatelessWidget {
-  const _Quests(this.quests, this.level);
+  const _Quests(this.quests);
 
   final List<Quest> quests;
-  final PlayerLevel level;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppPaddings.m),
-      child: quests.isEmpty
-          ? EmptyQuestsCard(type: .openHabbits, onPressed: () {}, level: level)
-          : Column(
-              spacing: AppPaddings.s,
-              children: [
-                Row(
-                  mainAxisAlignment: .spaceBetween,
-                  children: [
-                    Text(
-                      LocaleKeys.home_todays_missions.tr(),
-                      style: TextTheme.of(context).headlineSmall,
-                    ),
-                    Text('-', style: textTheme.labelSmall),
-                  ],
-                ),
-              ],
-            ),
-    );
+    return quests.isEmpty
+        ? EmptyQuestsCard(
+            type: .openHabbits,
+            onPressed: () => GoRouter.of(context).go('/habits'),
+          )
+        : Column(
+            spacing: AppPaddings.s,
+            children: [
+              Row(
+                mainAxisAlignment: .spaceBetween,
+                children: [
+                  Text(
+                    LocaleKeys.home_todays_missions.tr(),
+                    style: TextTheme.of(context).headlineSmall,
+                  ),
+                  Text('-', style: textTheme.labelSmall),
+                ],
+              ),
+            ],
+          );
   }
 }
 
