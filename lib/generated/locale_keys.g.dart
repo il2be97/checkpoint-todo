@@ -25,6 +25,11 @@ abstract class  LocaleKeys {
   static const habits_tab_active = 'habits.tab.active';
   static const habits_tab_archived = 'habits.tab.archived';
   static const habits_tab = 'habits.tab';
+  static const habits_active_hint_title = 'habits.active.hint_title';
+  static const habits_active_hint_button = 'habits.active.hint_button';
+  static const habits_active = 'habits.active';
+  static const habits_archived_hint_title = 'habits.archived.hint_title';
+  static const habits_archived = 'habits.archived';
   static const habits = 'habits';
   static const empty_card_open_habits_title = 'empty_card.open_habits.title';
   static const empty_card_open_habits_subtitle = 'empty_card.open_habits.subtitle';

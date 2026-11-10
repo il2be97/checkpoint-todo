@@ -12,6 +12,7 @@ import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 enum _Tab { active, archived }
 
@@ -64,7 +65,6 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
                 child: _HabitTabBar(controller: _tabController),
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.m)),
           ];
         },
         body: TabBarView(
@@ -73,13 +73,19 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
             BlocBuilder<ActiveQuestsCubit, ActiveQuestsState>(
               builder: (context, state) => AppShimmer(
                 isLoading: state.isLoading,
-                child: _ActiveHabits(state.uQuest),
+                child: Padding(
+                  padding: const EdgeInsets.all(AppPaddings.l),
+                  child: _ActiveHabits(state.uQuest),
+                ),
               ),
             ),
             BlocBuilder<ArchivedHabitsCubit, ArchivedHabitsState>(
               builder: (context, state) => AppShimmer(
                 isLoading: state.isLoading,
-                child: _ArchivedHabits(state.uQuest),
+                child: Padding(
+                  padding: const EdgeInsets.all(AppPaddings.l),
+                  child: _ArchivedHabits(state.uQuest),
+                ),
               ),
             ),
           ],
@@ -97,7 +103,20 @@ class _ActiveHabits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return quests.isEmpty
-        ? EmptyQuestsCard(type: .createHabit, onPressed: () {})
+        ? Column(
+            spacing: AppPaddings.m,
+            children: [
+              EmptyQuestsCard(type: .createHabit, onPressed: () {}),
+              Text(
+                LocaleKeys.habits_active_hint_title.tr(),
+                style: TextTheme.of(context).labelMedium,
+              ),
+              TextButton(
+                onPressed: () => GoRouter.of(context).go('/home'),
+                child: Text(LocaleKeys.habits_active_hint_button.tr()),
+              ),
+            ],
+          )
         : const Placeholder();
   }
 }
@@ -110,7 +129,16 @@ class _ArchivedHabits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return quests.isEmpty
-        ? EmptyQuestsCard(type: .archiveHabits, onPressed: () {})
+        ? Column(
+            spacing: AppPaddings.m,
+            children: [
+              EmptyQuestsCard(type: .archiveHabits, onPressed: () {}),
+              Text(
+                LocaleKeys.habits_archived_hint_title.tr(),
+                style: TextTheme.of(context).labelMedium,
+              ),
+            ],
+          )
         : const Placeholder();
   }
 }

@@ -10,5 +10,8 @@ class ArchivedHabitsCubit extends Cubit<ArchivedHabitsState> {
 
   Future<void> load() async {
     emit(const .loading());
+
+    await Future.delayed(const Duration(seconds: 1));
+    emit(const .loaded([]));
   }
 }

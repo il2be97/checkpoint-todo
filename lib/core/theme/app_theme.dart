@@ -49,6 +49,9 @@ abstract final class AppTheme {
       unselectedLabelColor: Colors.grey.shade400,
       dividerColor: Colors.transparent,
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: const Color(0xFFFDBA74)),
+    ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         backgroundColor: _primaryColor,

@@ -40,6 +40,13 @@ class CodegenLoader extends AssetLoader{
     "tab": {
       "active": "Active",
       "archived": "Archived"
+    },
+    "active": {
+      "hint_title": "Start small. A few minutes a day is enough.",
+      "hint_button": "Back to Home"
+    },
+    "archived": {
+      "hint_title": "Restoring a habit moves it back to Active. Your previous check-ins stay saved."
     }
   },
   "empty_card": {
