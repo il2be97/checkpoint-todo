@@ -3,7 +3,6 @@ import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
 import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/features/habit/domain/entities/quest.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/active_quests_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/quests_cubit.dart';
 
@@ -32,7 +31,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final playerState = context.watch<PlayerCubit>().state;
-    final questsState = context.watch<ActiveQuestsCubit>().state;
+    final questsState = context.watch<QuestsCubit>().state;
 
     return Scaffold(
       body: AppShimmer(
