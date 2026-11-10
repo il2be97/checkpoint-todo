@@ -19,7 +19,7 @@ class DashboardPage extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: .min,
         children: [
-          Divider(),
+          const Divider(),
           NavigationBar(
             selectedIndex: shell.currentIndex,
             onDestinationSelected: (index) => shell.goBranch(
