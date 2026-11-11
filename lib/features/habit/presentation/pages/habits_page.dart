@@ -4,10 +4,11 @@ import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_decoration.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/features/habit/domain/entities/quest.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/active_quests_cubit.dart';
+import 'package:checkpoint/features/habit/presentation/blocs/active_habits_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/archived_habits_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/widgets/empty_quests_card.dart';
+import 'package:checkpoint/features/habit/presentation/popups/create_habit_popup.dart';
+import 'package:checkpoint/features/habit/presentation/widgets/empty_habits_card.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class HabitsPage extends StatefulWidget {
   static Widget create() {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<ActiveQuestsCubit>()..load()),
+        BlocProvider(create: (context) => sl<ActiveHabitsCubit>()..load()),
         BlocProvider(create: (context) => sl<ArchivedHabitsCubit>()..load()),
         BlocProvider(create: (context) => sl<PlayerCubit>()..load()),
       ],
@@ -70,12 +71,12 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
         body: TabBarView(
           controller: _tabController,
           children: [
-            BlocBuilder<ActiveQuestsCubit, ActiveQuestsState>(
+            BlocBuilder<ActiveHabitsCubit, ActiveHabitsState>(
               builder: (context, state) => AppShimmer(
                 isLoading: state.isLoading,
                 child: Padding(
                   padding: const EdgeInsets.all(AppPaddings.l),
-                  child: _ActiveHabits(state.uQuest),
+                  child: _ActiveHabits(state.uHabits),
                 ),
               ),
             ),
@@ -84,7 +85,10 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
                 isLoading: state.isLoading,
                 child: Padding(
                   padding: const EdgeInsets.all(AppPaddings.l),
-                  child: _ArchivedHabits(state.uQuest),
+                  child: _ArchivedHabits(
+                    state.uHabits,
+                    onActiveHabbitsTapped: () => _tabController.animateTo(0),
+                  ),
                 ),
               ),
             ),
@@ -96,17 +100,23 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
 }
 
 class _ActiveHabits extends StatelessWidget {
-  const _ActiveHabits(this.quests);
+  const _ActiveHabits(this.habits);
 
-  final List<Quest> quests;
+  final List<Habit> habits;
 
   @override
   Widget build(BuildContext context) {
-    return quests.isEmpty
+    return habits.isEmpty
         ? Column(
             spacing: AppPaddings.m,
             children: [
-              EmptyQuestsCard(type: .createHabit, onPressed: () {}),
+              EmptyHabitsCard(
+                type: .createHabit,
+                onPressed: () async {
+                  final quest = showCreateHabit(context);
+                  print(quest);
+                },
+              ),
               Text(
                 LocaleKeys.habits_active_hint_title.tr(),
                 style: TextTheme.of(context).labelMedium,
@@ -122,17 +132,21 @@ class _ActiveHabits extends StatelessWidget {
 }
 
 class _ArchivedHabits extends StatelessWidget {
-  const _ArchivedHabits(this.quests);
+  const _ArchivedHabits(this.habits, {required this.onActiveHabbitsTapped});
 
-  final List<Quest> quests;
+  final List<Habit> habits;
+  final VoidCallback onActiveHabbitsTapped;
 
   @override
   Widget build(BuildContext context) {
-    return quests.isEmpty
+    return habits.isEmpty
         ? Column(
             spacing: AppPaddings.m,
             children: [
-              EmptyQuestsCard(type: .archiveHabits, onPressed: () {}),
+              EmptyHabitsCard(
+                type: .archiveHabits,
+                onPressed: onActiveHabbitsTapped,
+              ),
               Text(
                 LocaleKeys.habits_archived_hint_title.tr(),
                 style: TextTheme.of(context).labelMedium,
@@ -151,7 +165,7 @@ class _HabitTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: .hardEdge,
-      decoration: AppDecoration.forCard(context),
+      decoration: AppDecoration.cardContainer(context),
       padding: const .all(AppPaddings.xs),
       child: TabBar(
         controller: controller,

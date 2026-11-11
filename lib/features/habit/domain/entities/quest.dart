@@ -1,4 +1,8 @@
-class Quest {
+enum HabitIcons { book, sport, coding, language, heart, coffee }
+
+enum HabitColors { lavender, green, orange, blue, red, pink }
+
+class Habit {
   final String title;
   final String icon;
   final int streak;
@@ -7,7 +11,7 @@ class Quest {
   final int totalDays;
   final bool completed;
 
-  Quest({
+  Habit({
     required this.title,
     required this.icon,
     required this.streak,

@@ -16,4 +16,12 @@ abstract final class AppIcons {
 
   static const grandmaster = 'assets/vectors/grandmaster.svg';
   static const grandmasterCampfire = 'assets/vectors/grandmaster_campfire.svg';
+
+  static const book = 'assets/vectors/book.svg';
+  static const coding = 'assets/vectors/coding.svg';
+  static const coffee = 'assets/vectors/coffee.svg';
+  static const language = 'assets/vectors/language.svg';
+  static const sport = 'assets/vectors/sport.svg';
+
+  static const unfold = 'assets/vectors/unfold.svg';
 }

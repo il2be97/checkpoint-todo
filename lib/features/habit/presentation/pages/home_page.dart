@@ -4,9 +4,9 @@ import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/features/habit/domain/entities/quest.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/quests_cubit.dart';
+import 'package:checkpoint/features/habit/presentation/blocs/habits_cubit.dart';
 
-import 'package:checkpoint/features/habit/presentation/widgets/empty_quests_card.dart';
+import 'package:checkpoint/features/habit/presentation/widgets/empty_habits_card.dart';
 import 'package:checkpoint/features/habit/presentation/widgets/player_card.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
   static Widget create() {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<QuestsCubit>()..load()),
+        BlocProvider(create: (context) => sl<HabitsCubit>()..load()),
         BlocProvider(create: (context) => sl<PlayerCubit>()..load()),
       ],
       child: const HomePage(),
@@ -31,11 +31,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final playerState = context.watch<PlayerCubit>().state;
-    final questsState = context.watch<QuestsCubit>().state;
+    final habitsState = context.watch<HabitsCubit>().state;
 
     return Scaffold(
       body: AppShimmer(
-        isLoading: playerState.isLoading || questsState.isLoading,
+        isLoading: playerState.isLoading || habitsState.isLoading,
         child: CustomScrollView(
           slivers: [
             AppSliverAppBar(
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
             const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
             SliverPadding(
               padding: const .symmetric(horizontal: AppPaddings.m),
-              sliver: SliverToBoxAdapter(child: _Quests(questsState.uQuest)),
+              sliver: SliverToBoxAdapter(child: _Quests(habitsState.uHabit)),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
           ],
@@ -63,15 +63,15 @@ class HomePage extends StatelessWidget {
 }
 
 class _Quests extends StatelessWidget {
-  const _Quests(this.quests);
+  const _Quests(this.habits);
 
-  final List<Quest> quests;
+  final List<Habit> habits;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
-    return quests.isEmpty
-        ? EmptyQuestsCard(
+    return habits.isEmpty
+        ? EmptyHabitsCard(
             type: .openHabbits,
             onPressed: () => GoRouter.of(context).go('/habits'),
           )

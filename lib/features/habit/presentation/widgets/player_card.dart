@@ -21,7 +21,7 @@ class PlayerCard extends StatelessWidget {
 
     return Container(
       padding: const .all(AppPaddings.m),
-      decoration: AppDecoration.forCard(context),
+      decoration: AppDecoration.cardContainer(context),
       child: Column(
         spacing: AppPaddings.s,
         children: [

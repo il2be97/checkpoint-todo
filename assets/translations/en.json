@@ -49,5 +49,27 @@
       "subtitle": "Taking a break from a habit? Archive it to keep your progress safe. Restore it whenever you’re ready.",
       "button": "View Active Habits"
     }
+  },
+  "create_habit": {
+    "title": "Create Habit",
+    "subtitle": "One small habit. A stronger knight.",
+    "placeholder_title": "Habit Name",
+    "placeholder": "e.g. Read for 20 minutes",
+    "icon_title": "Habit Icon",
+    "color_title": "Accent Color",
+    "notifification_title": "Notification Time",
+    "notification_hint": "A little nudge before your daily reset.",
+    "hint": "A little nudge before your daily reset.",
+    "every_day": "Every day",
+    "cancel": "Cancel",
+    "save": "Save Habit",
+    "colors": {
+      "lavender": "lavender",
+      "green": "green",
+      "orange": "orange",
+      "blue": "blue",
+      "red": "red",
+      "pink": "pink"
+    }
   }
 }

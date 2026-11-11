@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:checkpoint/features/habit/domain/entities/quest.dart';
-import 'package:checkpoint/features/habit/domain/usecases/load_quests.dart';
+import 'package:checkpoint/features/habit/domain/usecases/load_habits.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'quests_state.dart';
-part 'quests_cubit.freezed.dart';
+part 'habits_state.dart';
+part 'habits_cubit.freezed.dart';
 
-class QuestsCubit extends Cubit<QuestsState> {
-  QuestsCubit(this.loadQuests) : super(const .initial());
+class HabitsCubit extends Cubit<HabitsState> {
+  HabitsCubit(this.loadQuests) : super(const .initial());
 
   final LoadQuests loadQuests;
 

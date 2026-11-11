@@ -44,5 +44,25 @@ abstract class  LocaleKeys {
   static const empty_card_archive_habits_button = 'empty_card.archive_habits.button';
   static const empty_card_archive_habits = 'empty_card.archive_habits';
   static const empty_card = 'empty_card';
+  static const create_habit_title = 'create_habit.title';
+  static const create_habit_subtitle = 'create_habit.subtitle';
+  static const create_habit_placeholder_title = 'create_habit.placeholder_title';
+  static const create_habit_placeholder = 'create_habit.placeholder';
+  static const create_habit_icon_title = 'create_habit.icon_title';
+  static const create_habit_color_title = 'create_habit.color_title';
+  static const create_habit_notifification_title = 'create_habit.notifification_title';
+  static const create_habit_notification_hint = 'create_habit.notification_hint';
+  static const create_habit_hint = 'create_habit.hint';
+  static const create_habit_every_day = 'create_habit.every_day';
+  static const create_habit_cancel = 'create_habit.cancel';
+  static const create_habit_save = 'create_habit.save';
+  static const create_habit_colors_lavender = 'create_habit.colors.lavender';
+  static const create_habit_colors_green = 'create_habit.colors.green';
+  static const create_habit_colors_orange = 'create_habit.colors.orange';
+  static const create_habit_colors_blue = 'create_habit.colors.blue';
+  static const create_habit_colors_red = 'create_habit.colors.red';
+  static const create_habit_colors_pink = 'create_habit.colors.pink';
+  static const create_habit_colors = 'create_habit.colors';
+  static const create_habit = 'create_habit';
 
 }

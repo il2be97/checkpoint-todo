@@ -1,69 +1,146 @@
+import 'package:checkpoint/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 abstract final class AppTheme {
-  static const Color _primaryColor = Color(0xFFF97316);
-  static const Color _secondaryColor = Color(0xFF94A3B8);
-  static const Color _surfaceBgColor = Color(0xFF10182B);
-  static const Color _surfaceContainer = Color(0xFF1C293E);
-  static const Color _outlineVariant = Color(0xFF344258);
-
   static final ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: const ColorScheme.dark(
-      primary: _primaryColor,
-      surface: _surfaceBgColor,
-      surfaceContainer: _surfaceContainer,
-      outlineVariant: _outlineVariant,
+      primary: AppColors.primary,
+      onPrimary: AppColors.white,
+      primaryContainer: AppColors.primaryDarkContainer,
+      onPrimaryContainer: AppColors.primaryLight,
+      secondary: AppColors.secondary,
+      onSecondary: AppColors.white,
+      secondaryContainer: AppColors.secondaryContainer,
+      onSecondaryContainer: AppColors.secondaryOnContainer,
+      surface: AppColors.surface,
+      onSurface: AppColors.onSurface,
+      surfaceContainer: AppColors.surfaceContainer,
+      surfaceContainerHighest: AppColors.surfaceContainerHighest,
+      onSurfaceVariant: AppColors.onSurfaceVariant,
+      error: AppColors.error,
+      onError: AppColors.white,
+      errorContainer: AppColors.errorContainer,
+      onErrorContainer: AppColors.errorOnContainer,
+      outline: AppColors.outline,
+      outlineVariant: AppColors.outlineVariant,
     ),
     dividerTheme: const DividerThemeData(
-      color: _outlineVariant,
-      space: .minPositive,
+      color: AppColors.outlineVariant,
+      space: double.minPositive,
     ),
     textTheme: const TextTheme(
-      headlineMedium: TextStyle(
-        fontSize: 28,
+      displayLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+      displayMedium: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+      displaySmall: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+      headlineLarge: TextStyle(
+        fontSize: 27,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        letterSpacing: -0.8,
       ),
+      headlineMedium: TextStyle(
+        fontSize: 23,
+        fontWeight: FontWeight.bold,
+        letterSpacing: -0.5,
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        letterSpacing: -0.25,
+      ),
+      titleLarge: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        letterSpacing: -0.4,
+      ),
+      titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+      titleSmall: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+      bodyLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+      bodyMedium: TextStyle(fontSize: 13, fontWeight: FontWeight.normal),
+      bodySmall: TextStyle(fontSize: 11, fontWeight: FontWeight.normal),
+      labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
       labelSmall: TextStyle(
         fontSize: 10,
-        fontWeight: FontWeight.bold,
-        color: _secondaryColor,
+        fontWeight: FontWeight.w500,
         letterSpacing: 1.2,
       ),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: _surfaceBgColor,
-      shadowColor: _surfaceBgColor,
+      backgroundColor: AppColors.surface,
+      shadowColor: AppColors.surface,
       scrolledUnderElevation: 2,
       surfaceTintColor: Colors.transparent,
     ),
     tabBarTheme: TabBarThemeData(
       indicatorSize: TabBarIndicatorSize.tab,
       indicator: BoxDecoration(
-        color: const Color(0xFF25344C),
+        color: AppColors.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(20),
       ),
       labelColor: Colors.white,
-      unselectedLabelColor: Colors.grey.shade400,
+      unselectedLabelColor: AppColors.onSurfaceVariant,
       dividerColor: Colors.transparent,
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: const Color(0xFFFDBA74)),
+      style: TextButton.styleFrom(foregroundColor: AppColors.primaryBright),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: _primaryColor,
-        foregroundColor: Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     ),
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        foregroundColor: AppColors.onSurface,
+        backgroundColor: AppColors.surfaceContainerHigh,
+        disabledForegroundColor: AppColors.outline,
+        disabledBackgroundColor: AppColors.surfaceDim,
+        minimumSize: const Size(36, 36),
+        padding: const EdgeInsets.all(8.0),
+        shape: const CircleBorder(),
+        elevation: 2.0,
+        shadowColor: Colors.black,
+      ),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.secondary,
+      selectionColor: AppColors.secondaryContainer,
+      selectionHandleColor: AppColors.primary,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: const TextStyle(
+        color: AppColors.onSurfaceVariant,
+        fontSize: 13.0,
+        fontWeight: FontWeight.w400,
+      ),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 12.0,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        borderSide: const BorderSide(color: AppColors.outlineVariant, width: 1),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        borderSide: const BorderSide(color: AppColors.secondary, width: 2.0),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        borderSide: const BorderSide(color: AppColors.error, width: 2.0),
+      ),
+    ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: _primaryColor,
-      linearTrackColor: Color(0xFF25344C),
+      color: AppColors.primary,
+      linearTrackColor: AppColors.surfaceContainerHigh,
       linearMinHeight: 6.0,
       borderRadius: BorderRadius.all(Radius.circular(6)),
     ),
@@ -71,23 +148,21 @@ abstract final class AppTheme {
       indicatorShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
-
-      backgroundColor: _surfaceBgColor,
-      indicatorColor: _primaryColor.withValues(alpha: 0.2),
+      backgroundColor: AppColors.surface,
+      indicatorColor: AppColors.primary.withValues(alpha: 0.2),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         return states.isSelected
-            ? const IconThemeData(color: _primaryColor)
-            : const IconThemeData(color: _secondaryColor);
+            ? const IconThemeData(color: AppColors.primary)
+            : const IconThemeData(color: AppColors.onSurfaceVariant);
       }),
-
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         return states.isSelected
             ? const TextStyle(
-                color: _primaryColor,
+                color: AppColors.primary,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               )
-            : const TextStyle(color: _secondaryColor, fontSize: 12);
+            : const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 12);
       }),
     ),
   );

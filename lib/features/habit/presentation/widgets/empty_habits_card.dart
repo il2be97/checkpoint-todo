@@ -9,16 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-enum EmptyQuestsCardType { openHabbits, createHabit, archiveHabits }
+enum EmptyHabitsCardType { openHabbits, createHabit, archiveHabits }
 
-class EmptyQuestsCard extends StatelessWidget {
-  const EmptyQuestsCard({
+class EmptyHabitsCard extends StatelessWidget {
+  const EmptyHabitsCard({
     super.key,
     required this.type,
     required this.onPressed,
   });
 
-  final EmptyQuestsCardType type;
+  final EmptyHabitsCardType type;
   final VoidCallback onPressed;
 
   @override
@@ -26,7 +26,7 @@ class EmptyQuestsCard extends StatelessWidget {
     final level = context.watch<PlayerCubit>().state.uPlayer.progress.levelType;
     final textTheme = TextTheme.of(context);
     return Container(
-      decoration: AppDecoration.forCard(context),
+      decoration: AppDecoration.cardContainer(context),
       padding: const .all(AppPaddings.l),
       child: Column(
         mainAxisSize: .min,
@@ -43,36 +43,36 @@ class EmptyQuestsCard extends StatelessWidget {
   }
 }
 
-extension on EmptyQuestsCardType {
+extension on EmptyHabitsCardType {
   String get title {
     switch (this) {
-      case EmptyQuestsCardType.openHabbits:
+      case EmptyHabitsCardType.openHabbits:
         return LocaleKeys.empty_card_open_habits_title.tr();
-      case EmptyQuestsCardType.createHabit:
+      case EmptyHabitsCardType.createHabit:
         return LocaleKeys.empty_card_create_habits_title.tr();
-      case EmptyQuestsCardType.archiveHabits:
+      case EmptyHabitsCardType.archiveHabits:
         return LocaleKeys.empty_card_archive_habits_title.tr();
     }
   }
 
   String get subtitle {
     switch (this) {
-      case EmptyQuestsCardType.openHabbits:
+      case EmptyHabitsCardType.openHabbits:
         return LocaleKeys.empty_card_open_habits_subtitle.tr();
-      case EmptyQuestsCardType.createHabit:
+      case EmptyHabitsCardType.createHabit:
         return LocaleKeys.empty_card_create_habits_subtitle.tr();
-      case EmptyQuestsCardType.archiveHabits:
+      case EmptyHabitsCardType.archiveHabits:
         return LocaleKeys.empty_card_archive_habits_subtitle.tr();
     }
   }
 
   String get button {
     switch (this) {
-      case EmptyQuestsCardType.openHabbits:
+      case EmptyHabitsCardType.openHabbits:
         return LocaleKeys.empty_card_open_habits_button.tr();
-      case EmptyQuestsCardType.createHabit:
+      case EmptyHabitsCardType.createHabit:
         return LocaleKeys.empty_card_create_habits_button.tr();
-      case EmptyQuestsCardType.archiveHabits:
+      case EmptyHabitsCardType.archiveHabits:
         return LocaleKeys.empty_card_archive_habits_button.tr();
     }
   }
