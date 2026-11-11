@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:checkpoint/features/habit/domain/entities/quest.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'archived_habits_state.dart';

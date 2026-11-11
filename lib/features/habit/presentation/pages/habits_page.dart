@@ -3,11 +3,11 @@ import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
 import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_decoration.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:checkpoint/features/habit/domain/entities/quest.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/active_habits_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/archived_habits_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/popups/create_habit_popup.dart';
+import 'package:checkpoint/features/habit/presentation/popups/habit_popup.dart';
 import 'package:checkpoint/features/habit/presentation/widgets/empty_habits_card.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -106,28 +106,30 @@ class _ActiveHabits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return habits.isEmpty
-        ? Column(
-            spacing: AppPaddings.m,
-            children: [
-              EmptyHabitsCard(
-                type: .createHabit,
-                onPressed: () async {
-                  final quest = showCreateHabit(context);
-                  print(quest);
-                },
-              ),
-              Text(
-                LocaleKeys.habits_active_hint_title.tr(),
-                style: TextTheme.of(context).labelMedium,
-              ),
-              TextButton(
-                onPressed: () => GoRouter.of(context).go('/home'),
-                child: Text(LocaleKeys.habits_active_hint_button.tr()),
-              ),
-            ],
-          )
-        : const Placeholder();
+    return SingleChildScrollView(
+      child: habits.isEmpty
+          ? Column(
+              spacing: AppPaddings.m,
+              children: [
+                EmptyHabitsCard(
+                  type: .createHabit,
+                  onPressed: () async {
+                    final habit = await showCreateHabit(context);
+                    print(habit);
+                  },
+                ),
+                Text(
+                  LocaleKeys.habits_active_hint_title.tr(),
+                  style: TextTheme.of(context).labelMedium,
+                ),
+                TextButton(
+                  onPressed: () => GoRouter.of(context).go('/home'),
+                  child: Text(LocaleKeys.habits_active_hint_button.tr()),
+                ),
+              ],
+            )
+          : const Placeholder(),
+    );
   }
 }
 
@@ -139,21 +141,23 @@ class _ArchivedHabits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return habits.isEmpty
-        ? Column(
-            spacing: AppPaddings.m,
-            children: [
-              EmptyHabitsCard(
-                type: .archiveHabits,
-                onPressed: onActiveHabbitsTapped,
-              ),
-              Text(
-                LocaleKeys.habits_archived_hint_title.tr(),
-                style: TextTheme.of(context).labelMedium,
-              ),
-            ],
-          )
-        : const Placeholder();
+    return SingleChildScrollView(
+      child: habits.isEmpty
+          ? Column(
+              spacing: AppPaddings.m,
+              children: [
+                EmptyHabitsCard(
+                  type: .archiveHabits,
+                  onPressed: onActiveHabbitsTapped,
+                ),
+                Text(
+                  LocaleKeys.habits_archived_hint_title.tr(),
+                  style: TextTheme.of(context).labelMedium,
+                ),
+              ],
+            )
+          : const Placeholder(),
+    );
   }
 }
 

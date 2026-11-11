@@ -27,7 +27,7 @@ Future<void> injectHabit(GetIt sl) async {
   sl.registerFactory<LoadPlayer>(() => LoadPlayer(sl()));
   sl.registerFactory<LoadActiveHabits>(() => LoadActiveHabits(sl()));
   sl.registerFactory<LoadArchivedHabits>(() => LoadArchivedHabits(sl()));
-  sl.registerFactory<LoadQuests>(() => LoadQuests(sl()));
+  sl.registerFactory<LoadHabits>(() => LoadHabits(sl()));
 
   // Cubits
   sl.registerFactory<PlayerCubit>(() => PlayerCubit(sl()));

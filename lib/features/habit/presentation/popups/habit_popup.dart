@@ -1,7 +1,10 @@
 import 'package:checkpoint/core/theme/app_decoration.dart';
 import 'package:checkpoint/core/theme/app_icons.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:checkpoint/features/habit/domain/entities/quest.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit_colors.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit_icons.dart';
+import 'package:checkpoint/features/habit/domain/entities/time.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_colors_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_icons_helper.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
@@ -9,6 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+// MARK: - Show Popup
 Future<Habit?> showCreateHabit(BuildContext context) async {
   return showModalBottomSheet(
     context: context,
@@ -16,29 +20,67 @@ Future<Habit?> showCreateHabit(BuildContext context) async {
     isScrollControlled: true,
     useSafeArea: true,
     builder: (context) => DraggableScrollableSheet(
-      initialChildSize: 0.7,
+      initialChildSize: 0.75,
       expand: false,
       minChildSize: 0.5,
-      maxChildSize: 0.85,
+      maxChildSize: 0.9,
       builder: (context, controller) => _Popup(controller),
     ),
   );
 }
 
+Future<Habit?> showEditHabit(BuildContext context, Habit habit) async {
+  return showModalBottomSheet(
+    context: context,
+    useRootNavigator: true,
+    isScrollControlled: true,
+    useSafeArea: true,
+    builder: (context) => DraggableScrollableSheet(
+      initialChildSize: 0.75,
+      expand: false,
+      minChildSize: 0.5,
+      maxChildSize: 0.9,
+      builder: (context, controller) => _Popup(controller, habit: habit),
+    ),
+  );
+}
+
+// MARK: - Popup
 class _Popup extends StatefulWidget {
   final ScrollController scrollController;
+  final Habit? habit;
 
-  const _Popup(this.scrollController);
+  const _Popup(this.scrollController, {this.habit});
 
   @override
   State<_Popup> createState() => _PopupState();
 }
 
 class _PopupState extends State<_Popup> {
-  HabitIcons _icon = .book;
-  HabitColors _color = .lavender;
-  TimeOfDay _time = TimeOfDay.now();
-  String _title = '';
+  late HabitIcons _icon = widget.habit?.icon ?? .book;
+  late HabitColors _color = widget.habit?.color ?? .lavender;
+  late TimeOfDay _time = widget.habit?.time.toTimeOfDay() ?? TimeOfDay.now();
+  late String _title = widget.habit?.title ?? "";
+
+  late final TextEditingController _controller;
+  final FocusNode _textFieldFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    _controller = TextEditingController(text: _title);
+    super.initState();
+    _controller.addListener(
+      () => setState(() {
+        _title = _controller.text;
+      }),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +95,26 @@ class _PopupState extends State<_Popup> {
       _color = color;
     });
 
-    void setTitle(String text) => setState(() {
-      _title = text;
-    });
+    void setTime(TimeOfDay time) {
+      setState(() => _time = time);
+    }
 
-    void setTime(TimeOfDay time) => setState(() => _time = time);
+    void onSavePressed() {
+      final habit = Habit(
+        title: _title,
+        icon: _icon,
+        color: _color,
+        time: _time.toTime(),
+      );
+      Navigator.pop(context, habit);
+    }
 
-    void onSavePressed() {}
-
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: SingleChildScrollView(
-        controller: widget.scrollController,
-        padding: const .symmetric(vertical: AppPaddings.l),
+    return SingleChildScrollView(
+      controller: widget.scrollController,
+      padding: const .symmetric(vertical: AppPaddings.l),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _textFieldFocusNode.unfocus(),
         child: Column(
           spacing: AppPaddings.l,
           crossAxisAlignment: .start,
@@ -86,13 +134,15 @@ class _PopupState extends State<_Popup> {
                     crossAxisAlignment: .start,
                     children: [
                       Text(
-                        LocaleKeys.create_habit_title.tr(),
+                        widget.habit == null
+                            ? LocaleKeys.habit_popup_create_title.tr()
+                            : LocaleKeys.habit_popup_edit_title.tr(),
                         style: textTheme.headlineMedium?.copyWith(
                           color: colorScheme.onSurface,
                         ),
                       ),
                       Text(
-                        LocaleKeys.create_habit_subtitle.tr(),
+                        LocaleKeys.habit_popup_subtitle.tr(),
                         style: textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -114,17 +164,16 @@ class _PopupState extends State<_Popup> {
                 crossAxisAlignment: .start,
                 children: [
                   Text(
-                    LocaleKeys.create_habit_placeholder_title.tr(),
+                    LocaleKeys.habit_popup_placeholder_title.tr(),
                     style: textTheme.labelMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: AppPaddings.s),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: LocaleKeys.create_habit_placeholder.tr(),
-                    ),
-                    onChanged: setTitle,
+                  _InputField(
+                    controller: _controller,
+                    focusNode: _textFieldFocusNode,
+                    color: _color,
                   ),
                 ],
               ),
@@ -137,7 +186,7 @@ class _PopupState extends State<_Popup> {
                 Padding(
                   padding: const .symmetric(horizontal: AppPaddings.l),
                   child: Text(
-                    LocaleKeys.create_habit_icon_title.tr(),
+                    LocaleKeys.habit_popup_icon_title.tr(),
                     style: textTheme.labelMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -163,7 +212,7 @@ class _PopupState extends State<_Popup> {
                 Padding(
                   padding: const .symmetric(horizontal: AppPaddings.l),
                   child: Text(
-                    LocaleKeys.create_habit_icon_title.tr(),
+                    LocaleKeys.habit_popup_icon_title.tr(),
                     style: textTheme.labelMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -185,7 +234,7 @@ class _PopupState extends State<_Popup> {
                 crossAxisAlignment: .stretch,
                 children: [
                   Text(
-                    LocaleKeys.create_habit_notifification_title.tr(),
+                    LocaleKeys.habit_popup_notifification_title.tr(),
                     style: textTheme.labelMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -198,7 +247,7 @@ class _PopupState extends State<_Popup> {
                   ),
                   const SizedBox(height: AppPaddings.m),
                   Text(
-                    LocaleKeys.create_habit_notification_hint.tr(),
+                    LocaleKeys.habit_popup_notification_hint.tr(),
                     style: textTheme.bodySmall?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -207,21 +256,64 @@ class _PopupState extends State<_Popup> {
               ),
             ),
 
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(LocaleKeys.create_habit_cancel.tr()),
-                ),
+            // Buttons
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppPaddings.l),
+              child: Row(
+                spacing: AppPaddings.l,
+                children: [
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                      foregroundColor: colorScheme.onSurface,
+                      backgroundColor: colorScheme.surfaceContainer,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(LocaleKeys.habit_popup_cancel.tr()),
+                  ),
 
-                TextButton(
-                  onPressed: onSavePressed,
-                  child: Text(LocaleKeys.create_habit_save.tr()),
-                ),
-              ],
+                  Expanded(
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        foregroundColor: _color.foreground,
+                        backgroundColor: _color.background,
+                      ),
+                      onPressed: _title.isEmpty ? null : onSavePressed,
+                      child: Text(LocaleKeys.habit_popup_save.tr()),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// MARK: - Input Field
+class _InputField extends StatelessWidget {
+  const _InputField({
+    required this.controller,
+    required this.color,
+    required this.focusNode,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final HabitColors color;
+
+  @override
+  Widget build(BuildContext context) {
+    final focusedBorder = Theme.of(context).inputDecorationTheme.focusedBorder
+        ?.copyWith(borderSide: BorderSide(color: color.foreground));
+    return TextField(
+      controller: controller,
+      focusNode: focusNode,
+      cursorColor: color.foreground,
+      decoration: InputDecoration(
+        hintText: LocaleKeys.habit_popup_placeholder.tr(),
+        focusedBorder: focusedBorder,
       ),
     );
   }
@@ -264,22 +356,21 @@ class _ColorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = ColorScheme.of(context);
     return Ink(
       height: 48,
       width: 48,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: isSelected
-            ? Border.all(color: color.foreground, width: 2)
+            ? Border.all(color: color.background, width: 2)
             : null,
-        color: isSelected ? color.background : scheme.surfaceContainer,
+        color: color.foreground,
       ),
       child: InkWell(
         onTap: onTap,
         customBorder: const CircleBorder(),
         child: isSelected
-            ? Icon(Icons.check, size: 20, color: color.foreground)
+            ? Icon(Icons.check, size: 20, color: color.background)
             : null,
       ),
     );
@@ -381,6 +472,7 @@ class _NotificationField extends StatelessWidget {
           initialTime: time,
         );
         if (newTime == null) return;
+
         onChanged(newTime);
       },
       child: Container(
@@ -397,7 +489,7 @@ class _NotificationField extends StatelessWidget {
                 const Icon(Icons.alarm),
                 const SizedBox(width: AppPaddings.s),
                 Text(
-                  LocaleKeys.create_habit_every_day.tr(),
+                  LocaleKeys.habit_popup_every_day.tr(),
                   style: textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -433,4 +525,12 @@ class _NotificationField extends StatelessWidget {
       ),
     );
   }
+}
+
+extension on Time {
+  TimeOfDay toTimeOfDay() => TimeOfDay(hour: hour, minute: minute);
+}
+
+extension on TimeOfDay {
+  Time toTime() => Time(hour: hour, minute: minute);
 }

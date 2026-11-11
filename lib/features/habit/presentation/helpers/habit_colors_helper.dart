@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:checkpoint/features/habit/domain/entities/quest.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit_colors.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -29,12 +29,12 @@ extension HAbitColorsX on HabitColors {
 
   String get title {
     return switch (this) {
-      .lavender => LocaleKeys.create_habit_colors_lavender.tr(),
-      .green => LocaleKeys.create_habit_colors_green.tr(),
-      .orange => LocaleKeys.create_habit_colors_orange.tr(),
-      .blue => LocaleKeys.create_habit_colors_blue.tr(),
-      .red => LocaleKeys.create_habit_colors_red.tr(),
-      .pink => LocaleKeys.create_habit_colors_pink.tr(),
+      .lavender => LocaleKeys.habit_colors_lavender.tr(),
+      .green => LocaleKeys.habit_colors_green.tr(),
+      .orange => LocaleKeys.habit_colors_orange.tr(),
+      .blue => LocaleKeys.habit_colors_blue.tr(),
+      .red => LocaleKeys.habit_colors_red.tr(),
+      .pink => LocaleKeys.habit_colors_pink.tr(),
     };
   }
 }

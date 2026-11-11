@@ -1,5 +1,5 @@
 import 'package:checkpoint/core/theme/app_icons.dart';
-import 'package:checkpoint/features/habit/domain/entities/quest.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit_icons.dart';
 
 extension HabitIconsX on HabitIcons {
   String get iconPath {

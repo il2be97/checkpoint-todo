@@ -2,7 +2,7 @@ import 'package:checkpoint/core/injection/injection.dart';
 import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
 import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:checkpoint/features/habit/domain/entities/quest.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/habits_cubit.dart';
 
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
             const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
             SliverPadding(
               padding: const .symmetric(horizontal: AppPaddings.m),
-              sliver: SliverToBoxAdapter(child: _Quests(habitsState.uHabit)),
+              sliver: SliverToBoxAdapter(child: _Habits(habitsState.uHabit)),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
           ],
@@ -62,8 +62,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _Quests extends StatelessWidget {
-  const _Quests(this.habits);
+class _Habits extends StatelessWidget {
+  const _Habits(this.habits);
 
   final List<Habit> habits;
 

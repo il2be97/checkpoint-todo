@@ -66,8 +66,9 @@ class CodegenLoader extends AssetLoader{
       "button": "View Active Habits"
     }
   },
-  "create_habit": {
-    "title": "Create Habit",
+  "habit_popup": {
+    "create_title": "Create Habit",
+    "edit_title": "Edit Habit",
     "subtitle": "One small habit. A stronger knight.",
     "placeholder_title": "Habit Name",
     "placeholder": "e.g. Read for 20 minutes",
@@ -78,7 +79,9 @@ class CodegenLoader extends AssetLoader{
     "hint": "A little nudge before your daily reset.",
     "every_day": "Every day",
     "cancel": "Cancel",
-    "save": "Save Habit",
+    "save": "Save Habit"
+  },
+  "habit": {
     "colors": {
       "lavender": "lavender",
       "green": "green",
