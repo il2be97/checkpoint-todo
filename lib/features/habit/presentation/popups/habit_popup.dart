@@ -1,12 +1,14 @@
 import 'package:checkpoint/core/theme/app_decoration.dart';
 import 'package:checkpoint/core/theme/app_icons.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
+import 'package:checkpoint/core/theme/color_scheme.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit_colors.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit_icons.dart';
 import 'package:checkpoint/features/habit/domain/entities/time.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_colors_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_icons_helper.dart';
+import 'package:checkpoint/features/habit/presentation/helpers/time_helper.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +61,8 @@ class _Popup extends StatefulWidget {
 class _PopupState extends State<_Popup> {
   late HabitIcons _icon = widget.habit?.icon ?? .book;
   late HabitColors _color = widget.habit?.color ?? .lavender;
-  late TimeOfDay _time = widget.habit?.time.toTimeOfDay() ?? TimeOfDay.now();
+  late TimeOfDay _time =
+      widget.habit?.notificationTime?.toTimeOfDay() ?? TimeOfDay.now();
   late String _title = widget.habit?.title ?? "";
 
   late final TextEditingController _controller;
@@ -100,11 +103,11 @@ class _PopupState extends State<_Popup> {
     }
 
     void onSavePressed() {
-      final habit = Habit(
+      final habit = Habit.create(
         title: _title,
         icon: _icon,
         color: _color,
-        time: _time.toTime(),
+        notificationTime: _time.toTime(),
       );
       Navigator.pop(context, habit);
     }
@@ -265,7 +268,7 @@ class _PopupState extends State<_Popup> {
                   FilledButton(
                     style: FilledButton.styleFrom(
                       foregroundColor: colorScheme.onSurface,
-                      backgroundColor: colorScheme.surfaceContainer,
+                      backgroundColor: colorScheme.surfaceAction,
                     ),
                     onPressed: () => Navigator.pop(context),
                     child: Text(LocaleKeys.habit_popup_cancel.tr()),
@@ -525,10 +528,6 @@ class _NotificationField extends StatelessWidget {
       ),
     );
   }
-}
-
-extension on Time {
-  TimeOfDay toTimeOfDay() => TimeOfDay(hour: hour, minute: minute);
 }
 
 extension on TimeOfDay {

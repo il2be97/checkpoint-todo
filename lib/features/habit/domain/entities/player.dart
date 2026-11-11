@@ -1,22 +1,20 @@
 import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Player {
-  final int maxHealth;
-  final int health;
-  final String name;
-  final PlayerProgress progress;
-  final int streak;
+part 'player.freezed.dart';
 
-  Player({
-    required this.maxHealth,
-    required this.health,
-    required this.name,
-    required this.progress,
-    required this.streak,
-  });
+@freezed
+abstract class Player with _$Player {
+  const factory Player({
+    required int maxHealth,
+    required int health,
+    required String name,
+    required PlayerProgress progress,
+    required int streak,
+  }) = _Player;
 
   factory Player.mock() {
-    return Player(
+    return _Player(
       maxHealth: 5,
       health: 3,
       streak: 1,

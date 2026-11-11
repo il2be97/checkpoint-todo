@@ -2,12 +2,12 @@ import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:checkpoint/features/habit/domain/repositories/habits_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class LoadActiveHabits {
-  const LoadActiveHabits(this.habitsRepository);
-
+class CreateHabit {
   final IHabitsRepository habitsRepository;
 
-  TaskEither<Error, List<Habit>> call() {
-    return habitsRepository.readActive();
+  CreateHabit(this.habitsRepository);
+
+  TaskEither<Error, Habit> call(Habit habit) {
+    return habitsRepository.create(habit);
   }
 }

@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 abstract final class AppColors {
-  static const Color surface = Color(0xFF10141C);
-  static const Color surfaceContainer = Color(0xFF181E29);
-  static const Color surfaceContainerHigh = Color(0xFF222834);
+  static const Color surface = Color(0xFF0F172A);
+  static const Color surfaceContainer = Color(0xFF1E293B);
+  static const Color surfaceContainerHigh = Color(0xFF25344C);
   static const Color surfaceContainerHighest = Color(0xFF2D3544);
   static const Color surfaceBright = Color(0xFF374152);
   static const Color surfaceDim = Color(0xFF0C0F16);
@@ -20,7 +20,7 @@ abstract final class AppColors {
   static const Color primary = Color(0xFFF97316);
   static const Color primaryBright = Color(0xFFFB923C);
   static const Color primaryLight = Color(0xFFFFEDD5);
-  static const Color primaryDarkContainer = Color(0xFF3D2114);
+  static const Color primaryDarkContainer = Color(0xFF382B28);
   static const Color primaryContainer = Color(0xFFFED7AA);
   static const Color primaryOnContainer = Color(0xFF7C2D12);
 
@@ -37,8 +37,8 @@ abstract final class AppColors {
 
   static const Color error = Color(0xFFEF4444);
   static const Color errorBright = Color(0xFFF87171);
-  static const Color errorContainer = Color(0xFF7F1D1D);
-  static const Color errorOnContainer = Color(0xFFFEE2E2);
+  static const Color errorContainer = Color(0xFF3C2B35);
+  static const Color errorOnContainer = Color(0xFFFCA5A5);
 
   static const Color info = Color(0xFF3B82F6);
   static const Color infoContainer = Color(0xFF1E3A8A);

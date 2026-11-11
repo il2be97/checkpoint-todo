@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
             const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
             SliverPadding(
               padding: const .symmetric(horizontal: AppPaddings.m),
-              sliver: SliverToBoxAdapter(child: _Habits(habitsState.uHabit)),
+              sliver: SliverToBoxAdapter(child: _Habits(habitsState.habits)),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
           ],

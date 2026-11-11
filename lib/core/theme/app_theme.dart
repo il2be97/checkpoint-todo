@@ -30,6 +30,10 @@ abstract final class AppTheme {
       color: AppColors.outlineVariant,
       space: double.minPositive,
     ),
+
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: AppColors.surfaceContainer,
+    ),
     textTheme: const TextTheme(
       displayLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
       displayMedium: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
@@ -65,6 +69,15 @@ abstract final class AppTheme {
         fontSize: 10,
         fontWeight: FontWeight.w500,
         letterSpacing: 1.2,
+      ),
+    ),
+    switchTheme: SwitchThemeData(
+      trackColor: WidgetStateProperty.resolveWith(
+        (states) => states.isSelected ? AppColors.success : AppColors.outline,
+      ),
+      thumbColor: WidgetStateProperty.resolveWith(
+        (states) =>
+            states.isSelected ? AppColors.white : AppColors.onSurfaceVariant,
       ),
     ),
     appBarTheme: const AppBarTheme(

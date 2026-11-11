@@ -25,10 +25,20 @@ abstract class  LocaleKeys {
   static const habits_tab_active = 'habits.tab.active';
   static const habits_tab_archived = 'habits.tab.archived';
   static const habits_tab = 'habits.tab';
+  static const habits_active_daily_routine_title = 'habits.active.daily_routine_title';
+  static const habits_active_daily_routine_count = 'habits.active.daily_routine_count';
+  static const habits_active_cell_streak_days = 'habits.active.cell.streak_days';
+  static const habits_active_cell_on_for_today = 'habits.active.cell.on_for_today';
+  static const habits_active_cell = 'habits.active.cell';
   static const habits_active_hint_title = 'habits.active.hint_title';
   static const habits_active_hint_button = 'habits.active.hint_button';
   static const habits_active = 'habits.active';
+  static const habits_archived_title = 'habits.archived.title';
+  static const habits_archived_subtitle = 'habits.archived.subtitle';
   static const habits_archived_hint_title = 'habits.archived.hint_title';
+  static const habits_archived_status = 'habits.archived.status';
+  static const habits_archived_info = 'habits.archived.info';
+  static const habits_archived_restore = 'habits.archived.restore';
   static const habits_archived = 'habits.archived';
   static const habits = 'habits';
   static const empty_card_open_habits_title = 'empty_card.open_habits.title';
@@ -66,5 +76,18 @@ abstract class  LocaleKeys {
   static const habit_colors_pink = 'habit.colors.pink';
   static const habit_colors = 'habit.colors';
   static const habit = 'habit';
+  static const habit_options_title = 'habit_options.title';
+  static const habit_options_subtitle = 'habit_options.subtitle';
+  static const habit_options_edit_title = 'habit_options.edit.title';
+  static const habit_options_edit_subtitle = 'habit_options.edit.subtitle';
+  static const habit_options_edit = 'habit_options.edit';
+  static const habit_options_archive_title = 'habit_options.archive.title';
+  static const habit_options_archive_subtitle = 'habit_options.archive.subtitle';
+  static const habit_options_archive = 'habit_options.archive';
+  static const habit_options_delete_title = 'habit_options.delete.title';
+  static const habit_options_delete_subtitle = 'habit_options.delete.subtitle';
+  static const habit_options_delete = 'habit_options.delete';
+  static const habit_options_cancel = 'habit_options.cancel';
+  static const habit_options = 'habit_options';
 
 }

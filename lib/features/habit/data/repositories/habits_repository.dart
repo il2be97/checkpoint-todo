@@ -3,18 +3,33 @@ import 'package:checkpoint/features/habit/domain/repositories/habits_repository.
 import 'package:fpdart/fpdart.dart';
 
 class HabitsRepository extends IHabitsRepository {
+  List<Habit> _habits = [Habit.mock()];
+
   @override
   TaskEither<Error, List<Habit>> read(DateTime date) {
-    return .right([]);
+    return .right(List.from(_habits));
   }
 
   @override
-  TaskEither<Error, List<Habit>> readActive() {
-    return .right([]);
+  TaskEither<Error, Habit> create(Habit habit) {
+    return .Do((run) async {
+      _habits.add(habit);
+      return habit;
+    });
   }
 
   @override
-  TaskEither<Error, List<Habit>> readArchived() {
-    return .right([]);
+  TaskEither<Error, Habit> update(Habit habit) {
+    return .Do((run) async {
+      _habits = [for (final h in _habits) h.id == habit.id ? habit : h];
+      return habit;
+    });
+  }
+
+  @override
+  TaskEither<Error, Habit?> delete(Habit habit) {
+    return .Do((run) async {
+      return _habits.remove(habit) ? habit : null;
+    });
   }
 }

@@ -1,16 +1,17 @@
-class PlayerProgress {
-  final double maxExp;
-  final double currentExp;
-  final int level;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  PlayerProgress({
-    required this.maxExp,
-    required this.currentExp,
-    required this.level,
-  });
+part 'player_progress.freezed.dart';
+
+@freezed
+abstract class PlayerProgress with _$PlayerProgress {
+  const factory PlayerProgress({
+    required double maxExp,
+    required double currentExp,
+    required int level,
+  }) = _PlayerProgress;
 
   factory PlayerProgress.mock() {
-    return PlayerProgress(maxExp: 1000, currentExp: 0, level: 1);
+    return const _PlayerProgress(maxExp: 1000, currentExp: 0, level: 1);
   }
 }
 
@@ -19,12 +20,12 @@ enum PlayerLevel { peasant, ragged, steel, veteran, grandmaster }
 extension PlayerProgressX on PlayerProgress {
   PlayerLevel get levelType {
     return switch (level) {
-      int l when l >= 1 && l <= 3 => .peasant,
-      int l when l >= 4 && l <= 7 => .ragged,
-      int l when l >= 8 && l <= 12 => .steel,
-      int l when l >= 13 && l <= 20 => .veteran,
-      int l when l >= 21 => .grandmaster,
-      _ => .peasant,
+      >= 1 && <= 3 => PlayerLevel.peasant,
+      >= 4 && <= 7 => PlayerLevel.ragged,
+      >= 8 && <= 12 => PlayerLevel.steel,
+      >= 13 && <= 20 => PlayerLevel.veteran,
+      >= 21 => PlayerLevel.grandmaster,
+      _ => PlayerLevel.peasant,
     };
   }
 }

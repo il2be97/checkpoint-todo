@@ -32,7 +32,7 @@ class CodegenLoader extends AssetLoader{
     "exp_to_next_level": "{current} XP to level {level}",
     "unknown": "Unknown",
     "hp_status": "{current}/{max} HP • Stay in the game",
-    "todays_missions": "Today's missions"
+    "todays_missions": "Today's quests"
   },
   "habits": {
     "subtitle": "keep the flame",
@@ -42,11 +42,22 @@ class CodegenLoader extends AssetLoader{
       "archived": "Archived"
     },
     "active": {
+      "daily_routine_title": "your daily routine",
+      "daily_routine_count": "{count} on for today",
+      "cell": {
+        "streak_days": "Days",
+        "on_for_today": "On for today"
+      },
       "hint_title": "Start small. A few minutes a day is enough.",
       "hint_button": "Back to Home"
     },
     "archived": {
-      "hint_title": "Restoring a habit moves it back to Active. Your previous check-ins stay saved."
+      "title": "Your quests, on pause",
+      "subtitle": "{count} archived habits · Your progress is saved.",
+      "hint_title": "Restoring a habit moves it back to Active. Your previous check-ins stay saved.",
+      "status": "Archived",
+      "info": "Archived {date} · {streak} check-ins saved",
+      "restore": "Restore Habit"
     }
   },
   "empty_card": {
@@ -90,6 +101,23 @@ class CodegenLoader extends AssetLoader{
       "red": "red",
       "pink": "pink"
     }
+  },
+  "habit_options": {
+    "title": "Habit options",
+    "subtitle": "Manage this habit and its saved progress.",
+    "edit": {
+      "title": "Edit habit",
+      "subtitle": "Change name, goal, schedule or reminder."
+    },
+    "archive": {
+      "title": "Archive habit",
+      "subtitle": "Keep your progress. Restore anytime."
+    },
+    "delete": {
+      "title": "Delete habit",
+      "subtitle": "Permanently remove this habit and history."
+    },
+    "cancel": "Cancel"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en};

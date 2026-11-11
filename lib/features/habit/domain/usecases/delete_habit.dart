@@ -2,11 +2,12 @@ import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:checkpoint/features/habit/domain/repositories/habits_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class LoadArchivedHabits {
-  const LoadArchivedHabits(this.habitsRepository);
+class DeleteHabit {
   final IHabitsRepository habitsRepository;
 
-  TaskEither<Error, List<Habit>> call() {
-    return habitsRepository.readArchived();
+  DeleteHabit(this.habitsRepository);
+
+  TaskEither<Error, Habit?> call(Habit habit) {
+    return habitsRepository.delete(habit);
   }
 }

@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart';
 
 abstract class IHabitsRepository {
   TaskEither<Error, List<Habit>> read(DateTime date);
-  TaskEither<Error, List<Habit>> readActive();
-  TaskEither<Error, List<Habit>> readArchived();
+  TaskEither<Error, Habit> update(Habit habit);
+  TaskEither<Error, Habit> create(Habit habit);
+  TaskEither<Error, Habit?> delete(Habit habit);
 }
