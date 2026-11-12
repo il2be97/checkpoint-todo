@@ -18,6 +18,9 @@ abstract class Habit with _$Habit {
     required bool isActiveToday,
     required int streak,
     required int bestStreak,
+    required int exp,
+    required int total,
+    required bool done,
     DateTime? archivedDate,
     Time? notificationTime,
   }) = _Habit;
@@ -27,9 +30,12 @@ abstract class Habit with _$Habit {
     required HabitIcons icon,
     required HabitColors color,
     required Time? notificationTime,
-    int bestStreak = 1,
-    int streak = 1,
+    int exp = 100,
+    int total = 0,
+    int bestStreak = 0,
+    int streak = 0,
     bool isActiveToday = true,
+    bool done = false,
   }) {
     return _Habit(
       id: const UuidV8().generate(),
@@ -40,6 +46,9 @@ abstract class Habit with _$Habit {
       streak: streak,
       bestStreak: bestStreak,
       notificationTime: notificationTime,
+      exp: 30,
+      total: 0,
+      done: false,
     );
   }
 
@@ -52,6 +61,9 @@ abstract class Habit with _$Habit {
       bestStreak: 1,
       notificationTime: Time.now(),
       isActiveToday: true,
+      total: 0,
+      exp: 30,
+      done: false,
     );
   }
 }

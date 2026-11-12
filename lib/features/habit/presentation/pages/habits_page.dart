@@ -1,13 +1,14 @@
 import 'package:checkpoint/core/injection/injection.dart';
+import 'package:checkpoint/core/presentation/widgets/app_card.dart';
 import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
 import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
-import 'package:checkpoint/core/theme/app_decoration.dart';
+import 'package:checkpoint/core/presentation/widgets/app_tab_bar.dart';
 import 'package:checkpoint/core/theme/app_icons.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/core/theme/color_scheme.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:checkpoint/features/habit/presentation/blocs/habits_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
+import 'package:checkpoint/features/habit/presentation/blocs/character_cubit.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_colors_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_icons_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/time_helper.dart';
@@ -31,7 +32,7 @@ class HabitsPage extends StatefulWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => sl<HabitsCubit>()..load()),
-        BlocProvider(create: (context) => sl<PlayerCubit>()..load()),
+        BlocProvider(create: (context) => sl<CharacterCubit>()..load()),
       ],
       child: const HabitsPage(),
     );
@@ -48,6 +49,7 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: _Tab.values.length, vsync: this);
+    _tabController.addListener(() => setState(() {}));
   }
 
   @override
@@ -91,7 +93,27 @@ class _HabitsPageState extends State<HabitsPage> with TickerProviderStateMixin {
             SliverPadding(
               padding: const .symmetric(horizontal: AppPaddings.m),
               sliver: SliverToBoxAdapter(
-                child: _HabitTabBar(controller: _tabController),
+                child: AppTabBar(
+                  controller: _tabController,
+                  tabs: [
+                    Tab(
+                      child: _TabContent(
+                        title: LocaleKeys.habits_tab_active.tr(),
+                        count: _tabController.index == _Tab.active.index
+                            ? habitsState.activated.length
+                            : null,
+                      ),
+                    ),
+                    Tab(
+                      child: _TabContent(
+                        title: LocaleKeys.habits_tab_archived.tr(),
+                        count: _tabController.index == _Tab.archived.index
+                            ? habitsState.archived.length
+                            : null,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ];
@@ -224,12 +246,7 @@ class _ActiveHabit extends StatelessWidget {
 
     final textTheme = TextTheme.of(context);
     final colorScheme = ColorScheme.of(context);
-    return Container(
-      padding: const .symmetric(
-        horizontal: AppPaddings.m,
-        vertical: AppPaddings.s,
-      ),
-      decoration: AppDecoration.cardContainer(context),
+    return AppCard(
       child: Column(
         spacing: AppPaddings.m,
         children: [
@@ -410,12 +427,7 @@ class _ArchivedHabit extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
     final colorScheme = ColorScheme.of(context);
-    return Container(
-      padding: const .symmetric(
-        horizontal: AppPaddings.m,
-        vertical: AppPaddings.s,
-      ),
-      decoration: AppDecoration.cardContainer(context),
+    return AppCard(
       child: Column(
         crossAxisAlignment: .stretch,
         children: [
@@ -465,24 +477,44 @@ class _ArchivedHabit extends StatelessWidget {
   }
 }
 
-// MARK: - Tab Bar
-class _HabitTabBar extends StatelessWidget {
-  const _HabitTabBar({required this.controller});
-  final TabController controller;
+// MARK: - TabContent
+class _TabContent extends StatelessWidget {
+  const _TabContent({required this.title, this.count});
+  final String title;
+  final int? count;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: .hardEdge,
-      decoration: AppDecoration.cardContainer(context),
-      padding: const .all(AppPaddings.xs),
-      child: TabBar(
-        controller: controller,
-        tabs: [
-          Tab(text: LocaleKeys.habits_tab_active.tr()),
-          Tab(text: LocaleKeys.habits_tab_archived.tr()),
-        ],
-      ),
+    final colorScheme = ColorScheme.of(context);
+    final textTheme = TextTheme.of(context);
+    return Row(
+      spacing: AppPaddings.xs,
+      mainAxisAlignment: .center,
+      children: [
+        Text(
+          title,
+          textAlign: .center,
+          style: textTheme.labelMedium?.copyWith(color: colorScheme.onSurface),
+        ),
+        if (count != null)
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: colorScheme.primaryContainer,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(AppPaddings.xs),
+              child: Center(
+                child: Text(
+                  count.toString(),
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colorScheme.primary,
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

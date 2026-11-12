@@ -1,8 +1,7 @@
-import 'package:checkpoint/core/theme/app_decoration.dart';
-import 'package:checkpoint/core/theme/app_icons.dart';
+import 'package:checkpoint/core/presentation/widgets/app_card.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/player_cubit.dart';
+import 'package:checkpoint/features/habit/presentation/blocs/character_cubit.dart';
+import 'package:checkpoint/features/habit/presentation/helpers/character_helper.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -23,17 +22,15 @@ class EmptyHabitsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final level = context.watch<PlayerCubit>().state.uPlayer.progress.levelType;
+    final character = context.watch<CharacterCubit>().state.uCharacter;
     final textTheme = TextTheme.of(context);
-    return Container(
-      decoration: AppDecoration.cardContainer(context),
-      padding: const .all(AppPaddings.l),
+    return AppCard(
       child: Column(
         mainAxisSize: .min,
         crossAxisAlignment: .stretch,
         spacing: AppPaddings.m,
         children: [
-          Center(child: SvgPicture.asset(level.iconPath)),
+          Center(child: SvgPicture.asset(character.relaxIcon)),
           Text(type.title, style: textTheme.headlineSmall, textAlign: .center),
           Text(type.subtitle, style: textTheme.bodySmall, textAlign: .center),
           FilledButton(onPressed: onPressed, child: Text(type.button)),
@@ -75,21 +72,5 @@ extension on EmptyHabitsCardType {
       case EmptyHabitsCardType.archiveHabits:
         return LocaleKeys.empty_card_archive_habits_button.tr();
     }
-  }
-}
-
-extension on PlayerLevel {
-  String get iconPath {
-    return switch (this) {
-      PlayerLevel.peasant => AppIcons.peasantCampfire,
-
-      PlayerLevel.ragged => AppIcons.raggedCampfire,
-
-      PlayerLevel.steel => AppIcons.steelCampfire,
-
-      PlayerLevel.veteran => AppIcons.veteran,
-
-      PlayerLevel.grandmaster => AppIcons.grandmaster,
-    };
   }
 }

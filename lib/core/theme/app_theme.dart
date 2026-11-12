@@ -17,6 +17,7 @@ abstract final class AppTheme {
       surface: AppColors.surface,
       onSurface: AppColors.onSurface,
       surfaceContainer: AppColors.surfaceContainer,
+      surfaceContainerHigh: AppColors.surfaceContainerHigh,
       surfaceContainerHighest: AppColors.surfaceContainerHighest,
       onSurfaceVariant: AppColors.onSurfaceVariant,
       error: AppColors.error,
@@ -32,7 +33,7 @@ abstract final class AppTheme {
     ),
 
     bottomSheetTheme: const BottomSheetThemeData(
-      backgroundColor: AppColors.surfaceContainer,
+      backgroundColor: AppColors.surface,
     ),
     textTheme: const TextTheme(
       displayLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
@@ -89,7 +90,7 @@ abstract final class AppTheme {
     tabBarTheme: TabBarThemeData(
       indicatorSize: TabBarIndicatorSize.tab,
       indicator: BoxDecoration(
-        color: AppColors.surfaceContainerHigh,
+        color: AppColors.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(20),
       ),
       labelColor: Colors.white,

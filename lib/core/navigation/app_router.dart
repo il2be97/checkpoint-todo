@@ -1,4 +1,5 @@
 import 'package:checkpoint/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:checkpoint/features/habit/presentation/pages/evolution_page.dart';
 import 'package:checkpoint/features/habit/presentation/pages/habits_page.dart';
 import 'package:checkpoint/features/habit/presentation/pages/home_page.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +14,15 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: '/home',
+              name: 'home',
               builder: (context, state) => HomePage.create(),
+              routes: [
+                GoRoute(
+                  path: '/evolution',
+                  name: 'evolution',
+                  builder: (context, state) => EvolutionPage.create(),
+                ),
+              ],
             ),
           ],
         ),
@@ -21,6 +30,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: '/habits',
+              name: 'habits',
               builder: (context, state) => HabitsPage.create(),
             ),
           ],

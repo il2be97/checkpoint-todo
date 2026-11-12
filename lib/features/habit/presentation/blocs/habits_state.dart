@@ -20,6 +20,8 @@ extension HabitsStateX on HabitsState {
     return this is _Loading;
   }
 
+  List<Habit> get activeToday =>
+      habits.where((habit) => habit.isActiveToday).toList();
   List<Habit> get activated =>
       habits.where((habit) => !habit.isArchived).toList();
   List<Habit> get archived =>

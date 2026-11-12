@@ -1,10 +1,8 @@
-import 'package:checkpoint/features/habit/data/dtos/player_dto.dart';
-import 'package:checkpoint/features/habit/data/dtos/player_progress_dto.dart';
-import 'package:checkpoint/features/habit/domain/entities/player.dart';
-import 'package:checkpoint/features/habit/domain/entities/player_progress.dart';
+import 'package:checkpoint/features/habit/data/dtos/character_dto.dart';
+import 'package:checkpoint/features/habit/domain/entities/character.dart';
 
-extension PlayerMapper on Player {
-  PlayerDTO toDTO() => PlayerDTO(
+extension CharacterMapper on Character {
+  CharacterDTO toDTO() => CharacterDTO(
     maxHealth: maxHealth,
     health: health,
     name: name,
@@ -13,8 +11,8 @@ extension PlayerMapper on Player {
   );
 }
 
-extension PlayerDTOMapper on PlayerDTO {
-  Player toEntity() => Player(
+extension CharacterDTOMapper on CharacterDTO {
+  Character toEntity() => Character(
     maxHealth: maxHealth,
     health: health,
     streak: streak,
@@ -23,12 +21,15 @@ extension PlayerDTOMapper on PlayerDTO {
   );
 }
 
-extension PlayerProgressMapper on PlayerProgress {
-  PlayerProgressDTO toDTO() =>
-      PlayerProgressDTO(maxExp: maxExp, currentExp: currentExp, level: level);
+extension CharacterProgressMapper on CharacterProgress {
+  CharacterProgressDTO toDTO() => CharacterProgressDTO(
+    maxExp: maxExp,
+    currentExp: currentExp,
+    level: level,
+  );
 }
 
-extension PlayerProgressDTOMapper on PlayerProgressDTO {
-  PlayerProgress toEntity() =>
-      PlayerProgress(maxExp: maxExp, currentExp: currentExp, level: level);
+extension CharacterProgressDTOMapper on CharacterProgressDTO {
+  CharacterProgress toEntity() =>
+      CharacterProgress(maxExp: maxExp, currentExp: currentExp, level: level);
 }

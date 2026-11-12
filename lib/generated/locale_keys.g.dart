@@ -7,6 +7,7 @@ abstract class  LocaleKeys {
   static const nav_habits = 'nav.habits';
   static const nav = 'nav';
   static const home_title = 'home.title';
+  static const home_subtitle = 'home.subtitle';
   static const home_level_peasant = 'home.level_peasant';
   static const home_level_ragged_knight = 'home.level_ragged_knight';
   static const home_level_steel_knight = 'home.level_steel_knight';
@@ -19,6 +20,22 @@ abstract class  LocaleKeys {
   static const home_unknown = 'home.unknown';
   static const home_hp_status = 'home.hp_status';
   static const home_todays_missions = 'home.todays_missions';
+  static const home_todays_completed_info = 'home.todays_completed_info';
+  static const home_best_streak = 'home.best_streak';
+  static const home_total_info = 'home.total_info';
+  static const home_exp_reward = 'home.exp_reward';
+  static const home_check_in = 'home.check_in';
+  static const home_done = 'home.done';
+  static const home_complete_hint = 'home.complete_hint';
+  static const home_evolution_title = 'home.evolution.title';
+  static const home_evolution_next_title = 'home.evolution.next.title';
+  static const home_evolution_next_subtitle = 'home.evolution.next.subtitle';
+  static const home_evolution_next = 'home.evolution.next';
+  static const home_evolution_max_title = 'home.evolution.max.title';
+  static const home_evolution_max_subtitle = 'home.evolution.max.subtitle';
+  static const home_evolution_max_info = 'home.evolution.max.info';
+  static const home_evolution_max = 'home.evolution.max';
+  static const home_evolution = 'home.evolution';
   static const home = 'home';
   static const habits_subtitle = 'habits.subtitle';
   static const habits_title = 'habits.title';
@@ -41,6 +58,15 @@ abstract class  LocaleKeys {
   static const habits_archived_restore = 'habits.archived.restore';
   static const habits_archived = 'habits.archived';
   static const habits = 'habits';
+  static const evolution_title = 'evolution.title';
+  static const evolution_subtitle = 'evolution.subtitle';
+  static const evolution_tip = 'evolution.tip';
+  static const evolution_unlocked = 'evolution.unlocked';
+  static const evolution_current = 'evolution.current';
+  static const evolution_locked = 'evolution.locked';
+  static const evolution_max_current = 'evolution.max_current';
+  static const evolution_max_locked = 'evolution.max_locked';
+  static const evolution = 'evolution';
   static const empty_card_open_habits_title = 'empty_card.open_habits.title';
   static const empty_card_open_habits_subtitle = 'empty_card.open_habits.subtitle';
   static const empty_card_open_habits_button = 'empty_card.open_habits.button';
@@ -88,6 +114,17 @@ abstract class  LocaleKeys {
   static const habit_options_delete_subtitle = 'habit_options.delete.subtitle';
   static const habit_options_delete = 'habit_options.delete';
   static const habit_options_cancel = 'habit_options.cancel';
+  static const habit_options_character_peasant = 'habit_options.character.peasant';
+  static const habit_options_character_peasant_description = 'habit_options.character.peasant_description';
+  static const habit_options_character_ragged = 'habit_options.character.ragged';
+  static const habit_options_character_ragged_description = 'habit_options.character.ragged_description';
+  static const habit_options_character_steel = 'habit_options.character.steel';
+  static const habit_options_character_steel_description = 'habit_options.character.steel_description';
+  static const habit_options_character_veteran = 'habit_options.character.veteran';
+  static const habit_options_character_veteran_description = 'habit_options.character.veteran_description';
+  static const habit_options_character_grandmaster = 'habit_options.character.grandmaster';
+  static const habit_options_character_grandmaster_description = 'habit_options.character.grandmaster_description';
+  static const habit_options_character = 'habit_options.character';
   static const habit_options = 'habit_options';
 
 }

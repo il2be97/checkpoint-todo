@@ -18,6 +18,7 @@ class AppSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final coloScheme = ColorScheme.of(context);
     final trailing = List.generate(actions.length, (index) {
       return Padding(
         padding: .only(
@@ -27,16 +28,31 @@ class AppSliverAppBar extends StatelessWidget {
       );
     });
 
+    final bool canPop = Navigator.of(context).canPop();
     return SliverAppBar(
       pinned: pinned,
       flexibleSpace: Padding(
-        padding: const .all(AppPaddings.m),
+        padding: .symmetric(
+          vertical: AppPaddings.m,
+          horizontal: canPop ? 64 : AppPaddings.m,
+        ),
         child: Column(
           crossAxisAlignment: .start,
           mainAxisAlignment: .end,
           children: [
-            if (subtitle != null) Text(subtitle!, style: textTheme.labelSmall),
-            Text(title, style: textTheme.headlineMedium),
+            if (subtitle != null)
+              Text(
+                subtitle!,
+                style: textTheme.labelSmall?.copyWith(
+                  color: coloScheme.primary,
+                ),
+              ),
+            Text(
+              title,
+              style: textTheme.headlineLarge?.copyWith(
+                color: coloScheme.onSurface,
+              ),
+            ),
           ],
         ),
       ),

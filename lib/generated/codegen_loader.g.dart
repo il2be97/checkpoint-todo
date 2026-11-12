@@ -21,6 +21,7 @@ class CodegenLoader extends AssetLoader{
   },
   "home": {
     "title": "Defend your streak.",
+    "subtitle": "a new day. a new quest.",
     "level_peasant": "Level {level} Peasant",
     "level_ragged_knight": "Level {level} Ragged Knight",
     "level_steel_knight": "Level {level} Steel Knight",
@@ -32,7 +33,26 @@ class CodegenLoader extends AssetLoader{
     "exp_to_next_level": "{current} XP to level {level}",
     "unknown": "Unknown",
     "hp_status": "{current}/{max} HP • Stay in the game",
-    "todays_missions": "Today's quests"
+    "todays_missions": "Today's quests",
+    "todays_completed_info": "{completed} of {general} complete",
+    "best_streak": "Best: {streak}",
+    "total_info": "Total {days} days",
+    "exp_reward": "+{exp} XP",
+    "check_in": "Check in",
+    "done": "Done",
+    "complete_hint": "Complete before end of the day to save 1 HP",
+    "evolution": {
+      "title": "Knight evolution",
+      "next": {
+        "title": "Your knight’s evolution",
+        "subtitle": "{next_tier} unlocks at level {level}"
+      },
+      "max": {
+        "title": "Maximum level reached",
+        "subtitle": "Your knight is fully evolved",
+        "info": "Max"
+      }
+    }
   },
   "habits": {
     "subtitle": "keep the flame",
@@ -59,6 +79,16 @@ class CodegenLoader extends AssetLoader{
       "info": "Archived {date} · {streak} check-ins saved",
       "restore": "Restore Habit"
     }
+  },
+  "evolution": {
+    "title": "Knight Evolution",
+    "subtitle": "the path of the flame",
+    "tip": "Build your streaks. Become a legend.",
+    "unlocked": "lv {min}–{max}  ·  unlocked",
+    "current": "lv {min}–{max}  ·  current",
+    "locked": "lv {min}–{max}  ·  locked",
+    "max_current": "lv {lvl}+  ·  current",
+    "max_locked": "lv {lvl}+  ·  locked"
   },
   "empty_card": {
     "open_habits": {
@@ -117,7 +147,19 @@ class CodegenLoader extends AssetLoader{
       "title": "Delete habit",
       "subtitle": "Permanently remove this habit and history."
     },
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "character": {
+      "peasant": "Peasant",
+      "peasant_description": "Ragged clothes · Wooden stick",
+      "ragged": "Ragged Knight",
+      "ragged_description": "Dented iron armor · Rusted sword",
+      "steel": "Steel Knight",
+      "steel_description": "Polished plate armor · Solid sword",
+      "veteran": "Veteran Paladin",
+      "veteran_description": "Silver & gold armor · Glowing cape",
+      "grandmaster": "Grandmaster",
+      "grandmaster_description": "Divine crystal armor · Ethereal aura"
+    }
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en};

@@ -3,8 +3,8 @@ import 'dart:ui';
 abstract final class AppColors {
   static const Color surface = Color(0xFF0F172A);
   static const Color surfaceContainer = Color(0xFF1E293B);
-  static const Color surfaceContainerHigh = Color(0xFF25344C);
-  static const Color surfaceContainerHighest = Color(0xFF2D3544);
+  static const Color surfaceContainerHigh = Color(0xFF1C293E);
+  static const Color surfaceContainerHighest = Color(0xFF25344C);
   static const Color surfaceBright = Color(0xFF374152);
   static const Color surfaceDim = Color(0xFF0C0F16);
   static const Color surfaceVariant = Color(0xFF2E3646);
