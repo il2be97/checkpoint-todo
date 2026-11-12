@@ -40,6 +40,11 @@ class CodegenLoader extends AssetLoader{
     "exp_reward": "+{exp} XP",
     "check_in": "Check in",
     "done": "Done",
+    "empty_habits": {
+      "title": "No Quest Active Yet",
+      "subtitle": "Your knight is resting. Go to the Habits tab to create your first daily routine and protect your HP!",
+      "button": "Go to Habits"
+    },
     "complete_hint": "Complete before end of the day to save 1 HP",
     "evolution": {
       "title": "Knight evolution",
@@ -62,6 +67,11 @@ class CodegenLoader extends AssetLoader{
       "archived": "Archived"
     },
     "active": {
+      "empty": {
+        "title": "Your first quest starts here",
+        "subtitle": "Build a routine, one small habit at a time. Complete daily quests to earn XP and evolve your knight.",
+        "button": "+ Create First Habit"
+      },
       "daily_routine_title": "your daily routine",
       "daily_routine_count": "{count} on for today",
       "cell": {
@@ -72,6 +82,11 @@ class CodegenLoader extends AssetLoader{
       "hint_button": "Back to Home"
     },
     "archived": {
+      "empty": {
+        "title": "No archived quests yet",
+        "subtitle": "Taking a break from a habit? Archive it to keep your progress safe. Restore it whenever you’re ready.",
+        "button": "View Active Habits"
+      },
       "title": "Your quests, on pause",
       "subtitle": "{count} archived habits · Your progress is saved.",
       "hint_title": "Restoring a habit moves it back to Active. Your previous check-ins stay saved.",
@@ -89,23 +104,6 @@ class CodegenLoader extends AssetLoader{
     "locked": "lv {min}–{max}  ·  locked",
     "max_current": "lv {lvl}+  ·  current",
     "max_locked": "lv {lvl}+  ·  locked"
-  },
-  "empty_card": {
-    "open_habits": {
-      "title": "No Quest Active Yet",
-      "subtitle": "Your knight is resting. Go to the Habits tab to create your first daily routine and protect your HP!",
-      "button": "Go to Habits"
-    },
-    "create_habits": {
-      "title": "Your first quest starts here",
-      "subtitle": "Build a routine, one small habit at a time. Complete daily quests to earn XP and evolve your knight.",
-      "button": "+ Create First Habit"
-    },
-    "archive_habits": {
-      "title": "No archived quests yet",
-      "subtitle": "Taking a break from a habit? Archive it to keep your progress safe. Restore it whenever you’re ready.",
-      "button": "View Active Habits"
-    }
   },
   "habit_popup": {
     "create_title": "Create Habit",

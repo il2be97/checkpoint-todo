@@ -1,6 +1,6 @@
 # checkpoint
 
-A TODO list application demonstrating the Clean Architecture approach powered by the BLoC pattern.
+A TODO list application demonstrating the Clean Architecture approach powered by the Riverpod pattern.
 
 ## Getting Started
 

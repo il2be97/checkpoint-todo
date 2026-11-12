@@ -1,11 +1,14 @@
 import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:checkpoint/features/habit/domain/repositories/habits_repository.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class ToggleHabitArchiveState {
+part 'toggle_habit_archive.g.dart';
+
+class ToggleHabitArchive {
   final IHabitsRepository habitsRepository;
 
-  ToggleHabitArchiveState(this.habitsRepository);
+  ToggleHabitArchive(this.habitsRepository);
 
   TaskEither<Error, Habit> call(Habit habit) {
     return habitsRepository.update(
@@ -14,4 +17,9 @@ class ToggleHabitArchiveState {
       ),
     );
   }
+}
+
+@riverpod
+ToggleHabitArchive toggleHabitArchive(Ref ref) {
+  return ToggleHabitArchive(ref.read(habitRepositoryProvider));
 }

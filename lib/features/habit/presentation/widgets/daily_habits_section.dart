@@ -1,92 +1,43 @@
-import 'package:checkpoint/core/injection/injection.dart';
+import 'package:checkpoint/features/character/presentation/widgets/character_relax_card.dart';
+import 'package:checkpoint/features/habit/presentation/helpers/habits_helper.dart';
+import 'package:checkpoint/features/habit/presentation/provider/habits_notifier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkpoint/core/presentation/widgets/app_card.dart';
 import 'package:checkpoint/core/presentation/widgets/app_pill.dart';
-import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
-import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
+import 'package:checkpoint/core/presentation/widgets/app_svg_picture.dart';
 import 'package:checkpoint/core/theme/app_icons.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/core/theme/color_scheme.dart';
-import 'package:checkpoint/features/habit/domain/entities/character.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/character_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/habits_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/helpers/character_tier_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_colors_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_icons_helper.dart';
-import 'package:checkpoint/core/presentation/widgets/app_svg_picture.dart';
-
-import 'package:checkpoint/features/habit/presentation/widgets/empty_habits_card.dart';
-import 'package:checkpoint/features/habit/presentation/widgets/character_card.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
-import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-// MARK: - Page
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  static Widget create() {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => sl<HabitsCubit>()..load()),
-        BlocProvider(create: (context) => sl<CharacterCubit>()..load()),
-      ],
-      child: const HomePage(),
-    );
-  }
+// MARK: - Section
+class DailyHabitsSection extends ConsumerWidget {
+  const DailyHabitsSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          AppSliverAppBar(
-            title: LocaleKeys.home_title.tr(),
-            subtitle: LocaleKeys.home_subtitle.tr().toUpperCase(),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.s)),
-          const SliverPadding(
-            padding: .symmetric(horizontal: AppPaddings.m),
-            sliver: SliverToBoxAdapter(child: CharacterCard()),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
-          const SliverPadding(
-            padding: .symmetric(horizontal: AppPaddings.m),
-            sliver: SliverToBoxAdapter(child: _Habits()),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
-
-          const SliverPadding(
-            padding: .symmetric(horizontal: AppPaddings.m),
-            sliver: SliverToBoxAdapter(child: _EvolutionCard()),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
-        ],
-      ),
-    );
-  }
-}
-
-// MARK: - Quests content
-class _Habits extends StatelessWidget {
-  const _Habits();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = TextTheme.of(context);
     final colorScheme = ColorScheme.of(context);
-    final habits = context.watch<HabitsCubit>().state.activeToday;
+    final habitsState = ref.watch(habitsProvider);
+    final habits = (habitsState.value ?? []).activeToday;
+
     return habits.isEmpty
-        ? EmptyHabitsCard(
-            type: .openHabbits,
-            onPressed: () => GoRouter.of(context).go('/habits'),
+        ? CharacterRelaxCard(
+            onPressed: () => GoRouter.of(context).goNamed('habits'),
+            title: LocaleKeys.home_empty_habits_title.tr(),
+            subtitle: LocaleKeys.home_empty_habits_subtitle.tr(),
+            buttonText: LocaleKeys.home_empty_habits_button.tr(),
           )
         : Column(
             spacing: AppPaddings.s,
             children: [
+              // Header
               Row(
                 mainAxisAlignment: .spaceBetween,
                 children: [
@@ -119,8 +70,14 @@ class _Habits extends StatelessWidget {
                   ),
                 ],
               ),
-              ...habits.map((habit) => _HabitCell(habit)),
-              if (habits.whereNot((habit) => habit.done).isNotEmpty)
+              // Habits list
+              ...habits.map(
+                (habit) =>
+                    _HabitCell(habit, onComplete: ref.habitsNotifier.complete),
+              ),
+
+              // Habits tip
+              if (habits.inProgress.isNotEmpty)
                 Row(
                   crossAxisAlignment: .center,
                   spacing: AppPaddings.s,
@@ -139,11 +96,16 @@ class _Habits extends StatelessWidget {
   }
 }
 
+extension on WidgetRef {
+  HabitsNotifier get habitsNotifier => read(habitsProvider.notifier);
+}
+
 // MARK: - Quest Cell
 class _HabitCell extends StatelessWidget {
-  const _HabitCell(this.habit);
+  const _HabitCell(this.habit, {required this.onComplete});
 
   final Habit habit;
+  final ValueSetter<Habit> onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +119,7 @@ class _HabitCell extends StatelessWidget {
             crossAxisAlignment: .start,
             spacing: AppPaddings.m,
             children: [
+              // Header
               Row(
                 spacing: AppPaddings.s,
                 children: [
@@ -177,8 +140,10 @@ class _HabitCell extends StatelessWidget {
               Row(
                 spacing: AppPaddings.s,
                 children: [
+                  // Streaks
                   Row(
                     children: [
+                      // Current Streak
                       const AppSvgPicture(
                         AppIcons.flame,
                         height: 24,
@@ -199,6 +164,7 @@ class _HabitCell extends StatelessWidget {
                     ],
                   ),
 
+                  // Best Streak
                   AppPill(
                     child: Row(
                       spacing: AppPaddings.xs,
@@ -215,6 +181,7 @@ class _HabitCell extends StatelessWidget {
                 ],
               ),
 
+              // Total
               Row(
                 spacing: AppPaddings.s,
                 children: [
@@ -241,6 +208,8 @@ class _HabitCell extends StatelessWidget {
               ),
             ],
           ),
+
+          // Checkmark button
           Column(
             spacing: AppPaddings.xs,
             children: [
@@ -259,7 +228,7 @@ class _HabitCell extends StatelessWidget {
                       ? null
                       : BorderSide(color: colorScheme.textSubtle, width: 1.0),
                 ),
-                onPressed: () => context.read<HabitsCubit>().markAsDone(habit),
+                onPressed: () => onComplete(habit),
                 icon: const Icon(Icons.check),
               ),
               Text(
@@ -271,94 +240,6 @@ class _HabitCell extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-// MARK: - Evolution Card
-class _EvolutionCard extends StatelessWidget {
-  const _EvolutionCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final characterState = context.watch<CharacterCubit>().state;
-    final character = characterState.uCharacter;
-    final nextTier = character.nextTier;
-    final textTheme = TextTheme.of(context);
-    final colorScheme = ColorScheme.of(context);
-
-    final String icon = nextTier != null ? nextTier.icon : character.tier.icon;
-    final String title = nextTier != null
-        ? LocaleKeys.home_evolution_next_title.tr()
-        : LocaleKeys.home_evolution_max_title.tr();
-    final String description = nextTier != null
-        ? LocaleKeys.home_evolution_next_subtitle.tr(
-            namedArgs: {
-              "next_tier": nextTier.name,
-              "level": nextTier.minLevel.toString(),
-            },
-          )
-        : LocaleKeys.home_evolution_max_subtitle.tr();
-
-    final Widget nextContent = nextTier != null
-        ? Icon(Icons.chevron_right, color: colorScheme.primary)
-        : Text(
-            LocaleKeys.home_evolution_max_info.tr().toUpperCase(),
-            style: textTheme.labelMedium?.copyWith(color: colorScheme.primary),
-          );
-
-    return Column(
-      crossAxisAlignment: .start,
-      spacing: AppPaddings.s,
-      children: [
-        Text(
-          LocaleKeys.home_evolution_title.tr(),
-          style: textTheme.titleSmall?.copyWith(color: colorScheme.onSurface),
-        ),
-        AppShimmer(
-          isLoading: characterState.isLoading,
-          child: GestureDetector(
-            onTap: () => GoRouter.of(context).pushNamed('evolution'),
-            child: Card(
-              color: colorScheme.surfaceContainer,
-              child: Padding(
-                padding: const .all(AppPaddings.m),
-                child: Row(
-                  spacing: AppPaddings.m,
-                  mainAxisAlignment: .spaceBetween,
-                  children: [
-                    Row(
-                      spacing: AppPaddings.s,
-                      children: [
-                        AppSvgPicture(icon, height: 51),
-                        Column(
-                          crossAxisAlignment: .start,
-                          children: [
-                            Text(
-                              title,
-                              style: textTheme.labelMedium?.copyWith(
-                                color: colorScheme.onSurface,
-                              ),
-                            ),
-                            Text(
-                              description,
-                              style: textTheme.bodySmall?.copyWith(
-                                color: colorScheme.textMuted,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-
-                    nextContent,
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

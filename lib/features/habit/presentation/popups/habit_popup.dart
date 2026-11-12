@@ -5,7 +5,7 @@ import 'package:checkpoint/core/theme/color_scheme.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit_colors.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit_icons.dart';
-import 'package:checkpoint/features/habit/domain/entities/time.dart';
+import 'package:checkpoint/core/models/time.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_colors_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_icons_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/time_helper.dart';

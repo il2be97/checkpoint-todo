@@ -1,4 +1,6 @@
-import 'package:checkpoint/features/habit/data/dtos/character_dto.dart';
+import 'package:checkpoint/features/character/data/dtos/character_dto.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+part 'local_character_data_source.g.dart';
 
 abstract class ILocalCharacterDataSource {
   Future<CharacterDTO> read();
@@ -15,4 +17,9 @@ class LocalCharacterDataSource extends ILocalCharacterDataSource {
       streak: 1,
     );
   }
+}
+
+@riverpod
+ILocalCharacterDataSource localCharacterDataSource(Ref ref) {
+  return LocalCharacterDataSource();
 }

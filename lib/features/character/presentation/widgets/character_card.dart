@@ -1,24 +1,24 @@
+import 'package:checkpoint/features/character/domain/entities/character.dart';
+import 'package:checkpoint/features/character/presentation/helpers/character_helper.dart';
+import 'package:checkpoint/features/character/presentation/provider/character_notifier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkpoint/core/presentation/widgets/app_card.dart';
 import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
 import 'package:checkpoint/core/theme/app_icons.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:checkpoint/features/habit/domain/entities/character.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/character_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/helpers/character_helper.dart';
-import 'package:checkpoint/features/habit/presentation/helpers/character_tier_helper.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CharacterCard extends StatelessWidget {
+class CharacterCard extends ConsumerWidget {
   const CharacterCard({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final characterState = context.watch<CharacterCubit>().state;
-    final character = characterState.uCharacter;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final characterState = ref.watch(characterProvider);
+    final character = characterState.value ?? Character.mock();
+
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;

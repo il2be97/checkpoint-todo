@@ -1,7 +1,7 @@
-import 'package:checkpoint/features/habit/data/data_sources/local_character_data_source.dart';
-import 'package:checkpoint/features/habit/data/mappers/player_mapper.dart';
-import 'package:checkpoint/features/habit/domain/entities/character.dart';
-import 'package:checkpoint/features/habit/domain/repositories/character_repository.dart';
+import 'package:checkpoint/features/character/data/data_sources/local_character_data_source.dart';
+import 'package:checkpoint/features/character/data/mappers/character_mapper.dart';
+import 'package:checkpoint/features/character/domain/entities/character.dart';
+import 'package:checkpoint/features/character/domain/repositories/character_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class CharacterRepository extends ICharacterRepository {

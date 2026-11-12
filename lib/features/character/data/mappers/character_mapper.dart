@@ -1,5 +1,5 @@
-import 'package:checkpoint/features/habit/data/dtos/character_dto.dart';
-import 'package:checkpoint/features/habit/domain/entities/character.dart';
+import 'package:checkpoint/features/character/data/dtos/character_dto.dart';
+import 'package:checkpoint/features/character/domain/entities/character.dart';
 
 extension CharacterMapper on Character {
   CharacterDTO toDTO() => CharacterDTO(

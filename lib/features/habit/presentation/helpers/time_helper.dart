@@ -1,4 +1,4 @@
-import 'package:checkpoint/features/habit/domain/entities/time.dart';
+import 'package:checkpoint/core/models/time.dart';
 import 'package:flutter/material.dart';
 
 extension TimeX on Time {

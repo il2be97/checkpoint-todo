@@ -1,26 +1,26 @@
 import 'package:checkpoint/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:checkpoint/features/habit/presentation/pages/evolution_page.dart';
+import 'package:checkpoint/features/character/presentation/pages/character_evolution_page.dart';
 import 'package:checkpoint/features/habit/presentation/pages/habits_page.dart';
-import 'package:checkpoint/features/habit/presentation/pages/home_page.dart';
+import 'package:checkpoint/features/home/presentation/pages/home_page.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/home',
   routes: [
     StatefulShellRoute.indexedStack(
-      builder: (context, state, shell) => DashboardPage.create(shell),
+      builder: (context, state, shell) => DashboardPage(shell),
       branches: [
         StatefulShellBranch(
           routes: [
             GoRoute(
               path: '/home',
               name: 'home',
-              builder: (context, state) => HomePage.create(),
+              builder: (context, state) => const HomePage(),
               routes: [
                 GoRoute(
-                  path: '/evolution',
-                  name: 'evolution',
-                  builder: (context, state) => EvolutionPage.create(),
+                  path: '/character-evolution',
+                  name: 'character-evolution',
+                  builder: (context, state) => const CharacterEvolutionPage(),
                 ),
               ],
             ),
@@ -31,7 +31,7 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/habits',
               name: 'habits',
-              builder: (context, state) => HabitsPage.create(),
+              builder: (context, state) => const HabitsPage(),
             ),
           ],
         ),

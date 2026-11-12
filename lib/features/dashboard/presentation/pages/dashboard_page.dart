@@ -8,10 +8,6 @@ class DashboardPage extends StatelessWidget {
 
   const DashboardPage(this.shell, {super.key});
 
-  static Widget create(StatefulNavigationShell shell) {
-    return DashboardPage(shell);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

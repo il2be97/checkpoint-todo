@@ -1,6 +1,6 @@
 import 'package:checkpoint/features/habit/domain/entities/habit_colors.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit_icons.dart';
-import 'package:checkpoint/features/habit/domain/entities/time.dart';
+import 'package:checkpoint/core/models/time.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/v8.dart';
 

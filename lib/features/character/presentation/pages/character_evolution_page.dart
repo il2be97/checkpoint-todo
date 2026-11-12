@@ -1,32 +1,25 @@
-import 'package:checkpoint/core/injection/injection.dart';
+import 'package:checkpoint/features/character/presentation/provider/character_notifier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkpoint/core/presentation/widgets/app_card.dart';
 import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/presentation/widgets/app_svg_picture.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/core/theme/color_scheme.dart';
-import 'package:checkpoint/features/habit/domain/entities/character.dart';
-import 'package:checkpoint/features/habit/presentation/blocs/character_cubit.dart';
-import 'package:checkpoint/features/habit/presentation/helpers/character_tier_helper.dart';
+import 'package:checkpoint/features/character/domain/entities/character.dart';
+import 'package:checkpoint/features/character/presentation/helpers/character_tier_helper.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EvolutionPage extends StatelessWidget {
-  const EvolutionPage({super.key});
-
-  static Widget create() {
-    return BlocProvider(
-      create: (context) => sl<CharacterCubit>()..load(),
-      child: const EvolutionPage(),
-    );
-  }
+class CharacterEvolutionPage extends ConsumerWidget {
+  const CharacterEvolutionPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = TextTheme.of(context);
     final colorScheme = ColorScheme.of(context);
-    final character = context.watch<CharacterCubit>().state;
+    final characterState = ref.watch(characterProvider);
+    final character = characterState.value ?? Character.mock();
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -55,7 +48,7 @@ class EvolutionPage extends StatelessWidget {
                     .map(
                       (tier) => _TierCell(
                         tier: tier,
-                        type: _CellType.from(character.uCharacter.tier, tier),
+                        type: _CellType.from(character.tier, tier),
                       ),
                     )
                     .toList(),

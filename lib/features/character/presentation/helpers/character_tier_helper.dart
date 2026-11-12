@@ -1,5 +1,5 @@
 import 'package:checkpoint/core/theme/app_icons.dart';
-import 'package:checkpoint/features/habit/domain/entities/character.dart';
+import 'package:checkpoint/features/character/domain/entities/character.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
