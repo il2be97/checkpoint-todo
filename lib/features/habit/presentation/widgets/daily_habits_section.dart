@@ -13,7 +13,7 @@ import 'package:checkpoint/features/habit/presentation/helpers/habit_colors_help
 import 'package:checkpoint/features/habit/presentation/helpers/habit_icons_helper.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 
 // MARK: - Section

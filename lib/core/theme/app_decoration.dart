@@ -1,5 +1,5 @@
 import 'package:checkpoint/core/theme/color_scheme.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 abstract class AppDecoration {
   static BoxDecoration itemContainer(BuildContext context) {

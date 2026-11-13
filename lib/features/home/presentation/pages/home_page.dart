@@ -5,7 +5,7 @@ import 'package:checkpoint/features/character/presentation/widgets/character_car
 import 'package:checkpoint/features/habit/presentation/widgets/daily_habits_section.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // MARK: - Page
 class HomePage extends StatelessWidget {

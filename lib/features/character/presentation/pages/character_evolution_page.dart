@@ -9,7 +9,7 @@ import 'package:checkpoint/features/character/domain/entities/character.dart';
 import 'package:checkpoint/features/character/presentation/helpers/character_tier_helper.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CharacterEvolutionPage extends ConsumerWidget {
   const CharacterEvolutionPage({super.key});

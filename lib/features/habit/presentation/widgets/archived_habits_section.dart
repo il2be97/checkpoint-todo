@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // MARK: - Acchived Habits Tab
 
 import 'package:checkpoint/features/habit/domain/entities/habit.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ArchivedHabitsSection extends ConsumerWidget {
   const ArchivedHabitsSection({super.key, required this.onActiveHabbitsTapped});

@@ -4,7 +4,7 @@ import 'package:checkpoint/features/character/presentation/provider/character_no
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkpoint/core/presentation/widgets/app_card.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CharacterRelaxCard extends ConsumerWidget {

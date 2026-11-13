@@ -1,5 +1,5 @@
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppSliverAppBar extends StatelessWidget {
   const AppSliverAppBar({

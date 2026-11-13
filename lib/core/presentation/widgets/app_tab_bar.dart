@@ -1,5 +1,5 @@
 import 'package:checkpoint/core/theme/app_paddings.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppTabBar extends StatelessWidget {
   const AppTabBar({super.key, required this.tabs, required this.controller});
