@@ -11,6 +11,8 @@ import 'package:checkpoint/features/habit/presentation/helpers/habit_icons_helpe
 import 'package:checkpoint/features/habit/presentation/helpers/time_helper.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -48,76 +50,57 @@ Future<Habit?> showEditHabit(BuildContext context, Habit habit) async {
 }
 
 // MARK: - Popup
-class _Popup extends StatefulWidget {
+class _Popup extends HookConsumerWidget {
   final ScrollController scrollController;
   final Habit? habit;
 
   const _Popup(this.scrollController, {this.habit});
 
   @override
-  State<_Popup> createState() => _PopupState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final icon = useState<HabitIcons>(habit?.icon ?? .book);
+    final color = useState<HabitColors>(habit?.color ?? .lavender);
+    final time = useState<TimeOfDay?>(habit?.notificationTime?.toTimeOfDay());
 
-class _PopupState extends State<_Popup> {
-  late HabitIcons _icon = widget.habit?.icon ?? .book;
-  late HabitColors _color = widget.habit?.color ?? .lavender;
-  late TimeOfDay _time =
-      widget.habit?.notificationTime?.toTimeOfDay() ?? TimeOfDay.now();
-  late String _title = widget.habit?.title ?? "";
+    final title = useState<String>(habit?.title ?? "");
 
-  late final TextEditingController _controller;
-  final FocusNode _textFieldFocusNode = FocusNode();
-
-  @override
-  void initState() {
-    _controller = TextEditingController(text: _title);
-    super.initState();
-    _controller.addListener(
-      () => setState(() {
-        _title = _controller.text;
-      }),
+    final controller = useMemoized(
+      () => TextEditingController(text: habit?.title ?? ""),
+      [habit],
     );
-  }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+    useEffect(() {
+      void listener() => title.value = controller.text;
 
-  @override
-  Widget build(BuildContext context) {
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
+
+    final textFieldFocusNode = useFocusNode();
+
+    void setIcon(HabitIcons newIcon) => icon.value = newIcon;
+    void setColor(HabitColors newColor) => color.value = newColor;
+    void setTime(TimeOfDay? newTime) => time.value = newTime;
+
+    void onSavePressed() {
+      final newHabit = Habit.create(
+        title: title.value,
+        icon: icon.value,
+        color: color.value,
+        notificationTime: time.value?.toTime(),
+      );
+      Navigator.pop(context, newHabit);
+    }
+
     final textTheme = TextTheme.of(context);
     final colorScheme = ColorScheme.of(context);
 
-    void setIcon(HabitIcons icon) => setState(() {
-      _icon = icon;
-    });
-
-    void setColor(HabitColors color) => setState(() {
-      _color = color;
-    });
-
-    void setTime(TimeOfDay time) {
-      setState(() => _time = time);
-    }
-
-    void onSavePressed() {
-      final habit = Habit.create(
-        title: _title,
-        icon: _icon,
-        color: _color,
-        notificationTime: _time.toTime(),
-      );
-      Navigator.pop(context, habit);
-    }
-
     return SingleChildScrollView(
-      controller: widget.scrollController,
+      controller: scrollController,
       padding: const .symmetric(vertical: AppPaddings.l),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => _textFieldFocusNode.unfocus(),
+        onTap: () => textFieldFocusNode.unfocus(),
         child: Column(
           spacing: AppPaddings.l,
           crossAxisAlignment: .start,
@@ -137,7 +120,7 @@ class _PopupState extends State<_Popup> {
                     crossAxisAlignment: .start,
                     children: [
                       Text(
-                        widget.habit == null
+                        habit == null
                             ? LocaleKeys.habit_popup_create_title.tr()
                             : LocaleKeys.habit_popup_edit_title.tr(),
                         style: textTheme.headlineMedium?.copyWith(
@@ -174,9 +157,9 @@ class _PopupState extends State<_Popup> {
                   ),
                   const SizedBox(height: AppPaddings.s),
                   _InputField(
-                    controller: _controller,
-                    focusNode: _textFieldFocusNode,
-                    color: _color,
+                    controller: controller,
+                    focusNode: textFieldFocusNode,
+                    color: color.value,
                   ),
                 ],
               ),
@@ -201,8 +184,8 @@ class _PopupState extends State<_Popup> {
                   padding: const .symmetric(horizontal: AppPaddings.l),
                   child: _IconButtons(
                     onChanged: setIcon,
-                    selected: _icon,
-                    activeColor: _color,
+                    selected: icon.value,
+                    activeColor: color.value,
                   ),
                 ),
               ],
@@ -215,7 +198,8 @@ class _PopupState extends State<_Popup> {
                 Padding(
                   padding: const .symmetric(horizontal: AppPaddings.l),
                   child: Text(
-                    LocaleKeys.habit_popup_icon_title.tr(),
+                    LocaleKeys.habit_popup_icon_title
+                        .tr(), // (Оставил ваш исходный ключ)
                     style: textTheme.labelMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -225,36 +209,51 @@ class _PopupState extends State<_Popup> {
                 SingleChildScrollView(
                   scrollDirection: .horizontal,
                   padding: const .symmetric(horizontal: AppPaddings.l),
-                  child: _ColorButtons(onChanged: setColor, selected: _color),
+                  child: _ColorButtons(
+                    onChanged: setColor,
+                    selected: color.value,
+                  ),
                 ),
               ],
             ),
 
             // Notification Time
             Padding(
-              padding: const .symmetric(horizontal: AppPaddings.l),
+              padding: const EdgeInsets.symmetric(horizontal: AppPaddings.l),
               child: Column(
                 crossAxisAlignment: .stretch,
                 children: [
-                  Text(
-                    LocaleKeys.habit_popup_notifification_title.tr(),
-                    style: textTheme.labelMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        LocaleKeys.habit_popup_notifification_title.tr(),
+                        style: textTheme.labelMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      Switch(
+                        value: time.value != null,
+                        onChanged: (enabled) =>
+                            time.value = enabled ? TimeOfDay.now() : null,
+                      ),
+                    ],
+                  ),
+
+                  if (time.value != null) ...[
+                    _NotificationField(
+                      color: color.value,
+                      time: time.value!,
+                      onChanged: setTime,
                     ),
-                  ),
-                  const SizedBox(height: AppPaddings.s),
-                  _NotificationField(
-                    color: _color,
-                    time: _time,
-                    onChanged: setTime,
-                  ),
-                  const SizedBox(height: AppPaddings.m),
-                  Text(
-                    LocaleKeys.habit_popup_notification_hint.tr(),
-                    style: textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
+                    const SizedBox(height: AppPaddings.m),
+                    Text(
+                      LocaleKeys.habit_popup_notification_hint.tr(),
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                  ),
+                  ],
                 ],
               ),
             ),
@@ -277,10 +276,10 @@ class _PopupState extends State<_Popup> {
                   Expanded(
                     child: FilledButton(
                       style: FilledButton.styleFrom(
-                        foregroundColor: _color.foreground,
-                        backgroundColor: _color.background,
+                        foregroundColor: color.value.foreground,
+                        backgroundColor: color.value.background,
                       ),
-                      onPressed: _title.isEmpty ? null : onSavePressed,
+                      onPressed: title.value.isEmpty ? null : onSavePressed,
                       child: Text(LocaleKeys.habit_popup_save.tr()),
                     ),
                   ),
@@ -322,7 +321,6 @@ class _InputField extends StatelessWidget {
   }
 }
 
-// MARK: - Color Buttons
 class _ColorButtons extends StatelessWidget {
   const _ColorButtons({required this.onChanged, required this.selected});
 
@@ -379,8 +377,6 @@ class _ColorButton extends StatelessWidget {
     );
   }
 }
-
-// MARK: - Icon Buttons
 
 class _IconButtons extends StatelessWidget {
   const _IconButtons({
