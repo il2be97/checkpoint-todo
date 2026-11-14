@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:checkpoint/core/balance/game_balance.dart';
 import 'package:checkpoint/core/helpers/date_time_helper.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit_color.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit_icon.dart';
@@ -139,7 +140,7 @@ extension HabitX on Habit {
   bool get isPausedToday => pausedDate.isSameDay(DateTime.now());
   bool get isActiveToday => !isPausedToday && !isArchived;
 
-  int get exp => 30;
+  double get exp => GameBalance.expPerHabit;
 }
 
 extension HabitValidationX on Habit {

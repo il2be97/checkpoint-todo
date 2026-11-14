@@ -60,6 +60,36 @@ enum CharacterTier {
   bool get isFinal => this == .grandmaster;
 }
 
+extension CharacterActions on Character {
+  Character changeHealth(double delta) {
+    final rawHealth = health + delta;
+    final roundedHealth = (rawHealth * 10).round() / 10;
+    final updatedHealth = roundedHealth.clamp(0.0, maxHealth.toDouble());
+
+    return copyWith(health: updatedHealth);
+  }
+
+  Character takeDamage(double amount) {
+    if (amount <= 0) return this;
+    return changeHealth(-amount);
+  }
+
+  Character heal(double amount) {
+    if (amount <= 0) return this;
+    return changeHealth(amount);
+  }
+
+  Character addExp(double delta) {
+    final oldLevel = level;
+    final updatedTotalExp = (totalExp + delta).clamp(0.0, double.infinity);
+    var updated = copyWith(totalExp: updatedTotalExp);
+    if (updated.level > oldLevel) {
+      updated = updated.copyWith(health: updated.maxHealth.toDouble());
+    }
+    return updated;
+  }
+}
+
 extension CharacterX on Character {
   int get level => LevelProgression.getLevel(totalExp);
   int get nextLevel => level + 1;

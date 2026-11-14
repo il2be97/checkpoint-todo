@@ -1,15 +1,19 @@
+import 'package:checkpoint/core/orchestrator/game_orchestrator.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends ConsumerWidget {
   final StatefulNavigationShell shell;
 
   const DashboardPage(this.shell, {super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Start running game engine.
+    ref.watch(gameOrchestratorProvider);
     return Scaffold(
       body: shell,
       bottomNavigationBar: Column(

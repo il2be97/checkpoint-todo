@@ -1,3 +1,4 @@
+import 'package:checkpoint/features/habit/data/data_sources/local/local_habit_data_source.dart';
 import 'package:checkpoint/features/habit/data/repositories/habits_repository.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit.dart';
 import 'package:fpdart/fpdart.dart';
@@ -15,5 +16,6 @@ abstract class IHabitsRepository {
 
 @riverpod
 IHabitsRepository habitRepository(Ref ref) {
-  return HabitsRepository();
+  final dataSource = ref.read(localHabitDataSourceProvider);
+  return HabitsRepository(dataSource);
 }

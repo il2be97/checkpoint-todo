@@ -6,6 +6,8 @@ part 'local_character_data_source.g.dart';
 abstract class ILocalCharacterDataSource {
   Future<CharacterDTO?> read();
   Future<void> create(CharacterDTO dto);
+  Future<void> update(CharacterDTO dto);
+  Future<void> delete(CharacterDTO dto);
 }
 
 @riverpod

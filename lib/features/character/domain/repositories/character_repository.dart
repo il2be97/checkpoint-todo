@@ -9,6 +9,7 @@ part 'character_repository.g.dart';
 abstract class ICharacterRepository {
   TaskEither<Error, Character?> read();
   TaskEither<Error, Character> create(Character character);
+  TaskEither<Error, Character> update(Character character);
 }
 
 @riverpod

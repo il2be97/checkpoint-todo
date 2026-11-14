@@ -1,3 +1,5 @@
+import 'package:checkpoint/core/services/app_resetter_sevice.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkpoint/core/presentation/widgets/app_card.dart';
 import 'package:checkpoint/core/presentation/widgets/app_sliver_app_bar.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
@@ -7,11 +9,11 @@ import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:material_ui/material_ui.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends ConsumerWidget {
   const new({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = TextTheme.of(context);
     final colorScheme = ColorScheme.of(context);
     return CustomScrollView(
@@ -80,7 +82,7 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: .start,
               children: [
                 Text(
-                  LocaleKeys.settings_reminders_title.tr().toUpperCase(),
+                  LocaleKeys.settings_support_title.tr().toUpperCase(),
                   style: textTheme.labelSmall?.copyWith(
                     color: colorScheme.textMuted,
                   ),
@@ -101,6 +103,44 @@ class SettingsPage extends StatelessWidget {
                       _Cell(
                         title: LocaleKeys.settings_support_privacy_title.tr(),
                         onTap: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // Restart
+        const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.l)),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: AppPaddings.m),
+          sliver: SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: .start,
+              children: [
+                Text(
+                  LocaleKeys.settings_reset_title.tr().toUpperCase(),
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colorScheme.textMuted,
+                  ),
+                ),
+                const SizedBox(height: AppPaddings.m),
+
+                AppCard(
+                  paddings: .zero,
+                  type: .destructive,
+                  child: Column(
+                    children: [
+                      // Restart
+                      _DestructiveCell(
+                        title: LocaleKeys.settings_reset_restart_title.tr(),
+                        subtitle: LocaleKeys.settings_reset_restart_subtitle
+                            .tr(),
+                        onTap: () => ref
+                            .read(appResetterServiceProvider.notifier)
+                            .reset(),
                       ),
                     ],
                   ),
@@ -192,6 +232,52 @@ class _Cell extends StatelessWidget {
                 ),
               ),
               const Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Mark: - Destructive Cell
+class _DestructiveCell extends StatelessWidget {
+  const _DestructiveCell({
+    required this.title,
+    required this.onTap,
+    this.subtitle,
+  });
+
+  final String title;
+  final String? subtitle;
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = TextTheme.of(context);
+    final colorScheme = ColorScheme.of(context);
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        height: 66,
+        child: Padding(
+          padding: const .symmetric(horizontal: AppPaddings.m),
+          child: Column(
+            mainAxisAlignment: .center,
+            crossAxisAlignment: .stretch,
+            children: [
+              Text(
+                title,
+                style: textTheme.titleSmall?.copyWith(color: colorScheme.error),
+              ),
+              if (subtitle != null)
+                Text(
+                  subtitle!,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colorScheme.textMuted,
+                  ),
+                ),
             ],
           ),
         ),

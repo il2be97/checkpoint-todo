@@ -21,4 +21,16 @@ class HiveLocalCharacterDataSource extends ILocalCharacterDataSource {
     final box = await _getBox();
     return await box.put(_characterKey, dto.toHive());
   }
+
+  @override
+  Future<void> update(CharacterDTO dto) async {
+    final box = await _getBox();
+    return await box.put(_characterKey, dto.toHive());
+  }
+
+  @override
+  Future<void> delete(CharacterDTO dto) async {
+    final box = await _getBox();
+    await box.delete(_characterKey);
+  }
 }

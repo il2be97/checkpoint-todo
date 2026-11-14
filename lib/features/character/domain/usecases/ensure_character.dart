@@ -21,7 +21,7 @@ class EnsureCharacter {
 }
 
 @riverpod
-EnsureCharacter ensutreCharacter(Ref ref) {
+EnsureCharacter ensureCharacter(Ref ref) {
   final repository = ref.read(characterRepositoryProvider);
   return EnsureCharacter(repository);
 }

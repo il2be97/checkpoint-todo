@@ -7,7 +7,7 @@ import 'package:checkpoint/features/habit/domain/usecases/toggle_habit_active.da
 import 'package:checkpoint/features/habit/domain/usecases/archive_habit.dart';
 import 'package:checkpoint/features/habit/domain/usecases/undo_archive_habit.dart';
 import 'package:checkpoint/features/habit/domain/usecases/update_habit.dart';
-import 'package:checkpoint/features/habit/presentation/provider/daily_habit_syc.dart';
+import 'package:checkpoint/features/habit/presentation/provider/daily_habit_sync.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'habits_notifier.g.dart';

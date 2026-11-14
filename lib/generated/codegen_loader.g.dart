@@ -187,7 +187,17 @@ class CodegenLoader extends AssetLoader{
       "privacy": {
         "title": "Privacy & data"
       }
+    },
+    "reset": {
+      "title": "Reset & Restart",
+      "restart": {
+        "title": "Restart journey",
+        "subtitle": "Forsake current progress and descend into the dark anew"
+      }
     }
+  },
+  "errors": {
+    "character_not_found": "Character not found"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en};

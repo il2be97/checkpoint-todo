@@ -34,4 +34,17 @@ class CharacterRepository extends ICharacterRepository {
       },
     );
   }
+
+  @override
+  TaskEither<Error, Character> update(Character character) {
+    return TaskEither.tryCatch(
+      () async {
+        await _dataSource.update(character.toDTO());
+        return character;
+      },
+      (err, stack) {
+        return .new();
+      },
+    );
+  }
 }

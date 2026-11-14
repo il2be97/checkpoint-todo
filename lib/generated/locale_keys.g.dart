@@ -146,6 +146,13 @@ abstract class  LocaleKeys {
   static const settings_support_privacy_title = 'settings.support.privacy.title';
   static const settings_support_privacy = 'settings.support.privacy';
   static const settings_support = 'settings.support';
+  static const settings_reset_title = 'settings.reset.title';
+  static const settings_reset_restart_title = 'settings.reset.restart.title';
+  static const settings_reset_restart_subtitle = 'settings.reset.restart.subtitle';
+  static const settings_reset_restart = 'settings.reset.restart';
+  static const settings_reset = 'settings.reset';
   static const settings = 'settings';
+  static const errors_character_not_found = 'errors.character_not_found';
+  static const errors = 'errors';
 
 }
