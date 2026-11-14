@@ -141,6 +141,7 @@ class _TierCell extends StatelessWidget {
     };
 
     return AppCard(
+      type: type == .current ? .active : .standart,
       child: Row(
         spacing: AppPaddings.m,
         children: [

@@ -8,6 +8,6 @@ extension HabitsX on List<Habit> {
       where((habit) => habit.archivedDate != null).toList();
 
   List<Habit> get activeToday => where((habit) => habit.isActiveToday).toList();
-  List<Habit> get completed => where((habit) => habit.done).toList();
-  List<Habit> get inProgress => whereNot((habit) => habit.done).toList();
+  List<Habit> get completed => where((habit) => habit.isDoneToday).toList();
+  List<Habit> get inProgress => whereNot((habit) => habit.isDoneToday).toList();
 }

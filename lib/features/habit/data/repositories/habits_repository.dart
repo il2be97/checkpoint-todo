@@ -6,7 +6,7 @@ class HabitsRepository extends IHabitsRepository {
   List<Habit> _habits = [Habit.mock()];
 
   @override
-  TaskEither<Error, List<Habit>> read(DateTime date) {
+  TaskEither<Error, List<Habit>> read() {
     return .right(List.from(_habits));
   }
 
@@ -31,5 +31,11 @@ class HabitsRepository extends IHabitsRepository {
     return .Do((run) async {
       return _habits.remove(habit) ? habit : null;
     });
+  }
+
+  @override
+  TaskEither<Error, List<Habit>> updateAll(List<Habit> habits) {
+    // TODO: implement updateAll
+    throw UnimplementedError();
   }
 }

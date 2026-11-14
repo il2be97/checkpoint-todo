@@ -1,7 +1,8 @@
 {
   "nav": {
     "home": "Home",
-    "habits": "Habits"
+    "habits": "Habits",
+    "settings": "Settings"
   },
   "home": {
     "title": "Defend your streak.",
@@ -12,9 +13,10 @@
     "level_veteran_paladin": "Level {level} Veteran Paladin",
     "level_grandmaster": "Level {level} Grandmaster",
     "total_streak": "total active streaks",
+    "total_streak_begin": "ready to begin",
     "total_streak_on_fire": "on fire",
     "exp": "{exp} HP",
-    "exp_to_next_level": "{current} XP to level {level}",
+    "exp_to_next_level": "{remain} XP to level {level}",
     "unknown": "Unknown",
     "hp_status": "{current}/{max} HP • Stay in the game",
     "todays_missions": "Today's quests",
@@ -141,6 +143,34 @@
       "veteran_description": "Silver & gold armor · Glowing cape",
       "grandmaster": "Grandmaster",
       "grandmaster_description": "Divine crystal armor · Ethereal aura"
+    }
+  },
+  "character_info_card": {
+    "description": "Level {level} · {current_exp} / {new_level_exp} XP",
+    "moto": "Keep the flame alive."
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "your quest, your rules",
+    "reminders": {
+      "title": "reminders & survival",
+      "daily": {
+        "title": "Daily reminders",
+        "subtitle": "A nudge to keep your quests alive"
+      },
+      "hp_rist": {
+        "title": "HP at-risk alerts",
+        "subtitle": "Get warned before losing a heart"
+      }
+    },
+    "support": {
+      "title": "support",
+      "help": {
+        "title": "Help & quest guide"
+      },
+      "privacy": {
+        "title": "Privacy & data"
+      }
     }
   }
 }

@@ -9,8 +9,8 @@ class LoadHabits {
   const LoadHabits(this.habitsRepository);
   final IHabitsRepository habitsRepository;
 
-  TaskEither<Error, List<Habit>> call(DateTime date) {
-    return habitsRepository.read(date);
+  TaskEither<Error, List<Habit>> call() {
+    return habitsRepository.read();
   }
 }
 

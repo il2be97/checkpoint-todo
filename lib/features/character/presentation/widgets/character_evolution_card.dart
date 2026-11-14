@@ -52,7 +52,7 @@ class CharacterEvolutionCard extends ConsumerWidget {
         AppShimmer(
           isLoading: characterState.isLoading,
           child: GestureDetector(
-            onTap: () => GoRouter.of(context).pushNamed('evolution'),
+            onTap: () => GoRouter.of(context).pushNamed('character-evolution'),
             child: Card(
               color: colorScheme.surfaceContainer,
               child: Padding(

@@ -21,7 +21,6 @@ class HomePage extends StatelessWidget {
             title: LocaleKeys.home_title.tr(),
             subtitle: LocaleKeys.home_subtitle.tr().toUpperCase(),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: AppPaddings.s)),
 
           // Character Info
           const SliverPadding(

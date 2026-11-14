@@ -31,7 +31,14 @@ abstract final class AppTheme {
       color: AppColors.outlineVariant,
       space: double.minPositive,
     ),
-
+    cardTheme: CardThemeData(
+      color: AppColors.surfaceContainerHigh,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+        side: const BorderSide(color: AppColors.outline, width: 1),
+      ),
+      margin: .zero,
+    ),
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: AppColors.surface,
     ),
@@ -59,6 +66,7 @@ abstract final class AppTheme {
         fontWeight: FontWeight.bold,
         letterSpacing: -0.4,
       ),
+
       titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       titleSmall: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
       bodyLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
@@ -154,7 +162,7 @@ abstract final class AppTheme {
     ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: AppColors.primary,
-      linearTrackColor: AppColors.surfaceContainerHigh,
+      linearTrackColor: AppColors.surfaceContainerHighest,
       linearMinHeight: 6.0,
       borderRadius: BorderRadius.all(Radius.circular(6)),
     ),

@@ -10,10 +10,8 @@ class ToggleHabitActive {
 
   ToggleHabitActive(this.habitsRepository);
 
-  TaskEither<Error, Habit> call(Habit habit, {required}) {
-    return habitsRepository.update(
-      habit.copyWith(isActiveToday: !habit.isActiveToday),
-    );
+  TaskEither<Error, Habit> call(Habit habit, {required bool shouldPause}) {
+    return habitsRepository.update(habit.togglePauseToday(shouldPause));
   }
 }
 

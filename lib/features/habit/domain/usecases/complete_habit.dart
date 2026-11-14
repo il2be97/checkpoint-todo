@@ -11,7 +11,7 @@ class CompleteHabit {
   CompleteHabit(this.habitsRepository);
 
   TaskEither<Error, Habit> call(Habit habit) {
-    return habitsRepository.update(habit.copyWith(done: true));
+    return habitsRepository.update(habit.complete());
   }
 }
 

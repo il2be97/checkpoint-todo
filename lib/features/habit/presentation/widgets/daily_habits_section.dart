@@ -1,3 +1,4 @@
+import 'package:checkpoint/core/presentation/widgets/app_shimmer.dart';
 import 'package:checkpoint/features/character/presentation/widgets/character_relax_card.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habits_helper.dart';
 import 'package:checkpoint/features/habit/presentation/provider/habits_notifier.dart';
@@ -25,7 +26,7 @@ class DailyHabitsSection extends ConsumerWidget {
     final textTheme = TextTheme.of(context);
     final colorScheme = ColorScheme.of(context);
     final habitsState = ref.watch(habitsProvider);
-    final habits = (habitsState.value ?? []).activeToday;
+    final habits = (habitsState.value ?? [Habit.mock()]).activeToday;
 
     return habits.isEmpty
         ? CharacterRelaxCard(
@@ -34,64 +35,72 @@ class DailyHabitsSection extends ConsumerWidget {
             subtitle: LocaleKeys.home_empty_habits_subtitle.tr(),
             buttonText: LocaleKeys.home_empty_habits_button.tr(),
           )
-        : Column(
-            spacing: AppPaddings.s,
-            children: [
-              // Header
-              Row(
-                mainAxisAlignment: .spaceBetween,
-                children: [
-                  Text(
-                    LocaleKeys.home_todays_missions.tr(),
-                    style: TextTheme.of(context).titleLarge,
+        : AppShimmer(
+            isLoading: habitsState.isLoading,
+            child: Column(
+              spacing: AppPaddings.s,
+              children: [
+                // Header
+                Row(
+                  mainAxisAlignment: .spaceBetween,
+                  children: [
+                    Text(
+                      LocaleKeys.home_todays_missions.tr(),
+                      style: TextTheme.of(context).titleLarge,
+                    ),
+                    Row(
+                      spacing: AppPaddings.xs,
+                      children: [
+                        Icon(
+                          Icons.check_circle_outline,
+                          color: colorScheme.positive,
+                        ),
+                        Text(
+                          LocaleKeys.home_todays_completed_info.tr(
+                            namedArgs: {
+                              "completed": habits
+                                  .where((habit) => habit.isDoneToday)
+                                  .length
+                                  .toString(),
+                              "general": habits.length.toString(),
+                            },
+                          ),
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colorScheme.positive,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                // Habits list
+                ...habits.map(
+                  (habit) => _HabitCell(
+                    habit,
+                    onComplete: ref.habitsNotifier.complete,
                   ),
+                ),
+
+                // Habits tip
+                if (habits.inProgress.isNotEmpty)
                   Row(
-                    spacing: AppPaddings.xs,
+                    crossAxisAlignment: .center,
+                    spacing: AppPaddings.s,
                     children: [
                       Icon(
-                        Icons.check_circle_outline,
-                        color: colorScheme.positive,
+                        Icons.gpp_maybe_outlined,
+                        color: colorScheme.warning,
                       ),
                       Text(
-                        LocaleKeys.home_todays_completed_info.tr(
-                          namedArgs: {
-                            "completed": habits
-                                .where((habit) => habit.done)
-                                .length
-                                .toString(),
-                            "general": habits.length.toString(),
-                          },
-                        ),
-                        style: textTheme.labelSmall?.copyWith(
-                          color: colorScheme.positive,
+                        LocaleKeys.home_complete_hint.tr(),
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
-              // Habits list
-              ...habits.map(
-                (habit) =>
-                    _HabitCell(habit, onComplete: ref.habitsNotifier.complete),
-              ),
-
-              // Habits tip
-              if (habits.inProgress.isNotEmpty)
-                Row(
-                  crossAxisAlignment: .center,
-                  spacing: AppPaddings.s,
-                  children: [
-                    Icon(Icons.gpp_maybe_outlined, color: colorScheme.warning),
-                    Text(
-                      LocaleKeys.home_complete_hint.tr(),
-                      style: textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-            ],
+              ],
+            ),
           );
   }
 }
@@ -218,13 +227,13 @@ class _HabitCell extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14.0),
                   ),
-                  foregroundColor: habit.done
+                  foregroundColor: habit.isDoneToday
                       ? colorScheme.surface
                       : colorScheme.onSurfaceVariant,
-                  backgroundColor: habit.done
+                  backgroundColor: habit.isDoneToday
                       ? colorScheme.positive
                       : colorScheme.surfaceContainerHighest,
-                  side: habit.done
+                  side: habit.isDoneToday
                       ? null
                       : BorderSide(color: colorScheme.textSubtle, width: 1.0),
                 ),
@@ -232,7 +241,7 @@ class _HabitCell extends StatelessWidget {
                 icon: const Icon(Icons.check),
               ),
               Text(
-                habit.done
+                habit.isDoneToday
                     ? LocaleKeys.home_done.tr()
                     : LocaleKeys.home_check_in.tr(),
               ),

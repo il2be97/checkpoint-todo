@@ -28,8 +28,7 @@ class DashboardPage extends StatelessWidget {
                 icon: Icons.list_outlined,
                 label: LocaleKeys.nav_habits.tr(),
               ),
-              // TODO: - Return back later
-              // _Destination(icon: Icons.settings, label: 'Settings'),
+              const _Destination(icon: Icons.settings, label: 'Settings'),
             ],
           ),
         ],

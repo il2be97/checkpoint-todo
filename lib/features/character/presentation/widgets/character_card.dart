@@ -1,5 +1,6 @@
 import 'package:checkpoint/features/character/domain/entities/character.dart';
 import 'package:checkpoint/features/character/presentation/helpers/character_helper.dart';
+import 'package:checkpoint/features/character/presentation/helpers/int_helper.dart';
 import 'package:checkpoint/features/character/presentation/provider/character_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkpoint/core/presentation/widgets/app_card.dart';
@@ -48,7 +49,9 @@ class CharacterCard extends ConsumerWidget {
                       Text(character.name, style: textTheme.headlineSmall),
                       const SizedBox(height: AppPaddings.s),
                       Row(
-                        children: List.generate(character.maxHealth, (index) {
+                        children: List.generate(character.maxHealth.round(), (
+                          index,
+                        ) {
                           return Padding(
                             padding: const .symmetric(
                               horizontal: AppPaddings.xs,
@@ -69,8 +72,8 @@ class CharacterCard extends ConsumerWidget {
                       Text(
                         LocaleKeys.home_hp_status.tr(
                           namedArgs: {
-                            'current': character.health.toString(),
-                            'max': character.maxHealth.toString(),
+                            'current': character.health.toInt().commaSeparated,
+                            'max': character.maxHealth.toInt().toString(),
                           },
                         ),
                         style: textTheme.labelSmall,
@@ -92,7 +95,9 @@ class CharacterCard extends ConsumerWidget {
                     children: [
                       Text(
                         LocaleKeys.home_total_streak.tr().toUpperCase(),
-                        style: textTheme.labelSmall,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                       ),
                       RichText(
                         text: TextSpan(
@@ -112,7 +117,12 @@ class CharacterCard extends ConsumerWidget {
                               style: textTheme.titleMedium,
                             ),
                             TextSpan(
-                              text: LocaleKeys.home_total_streak_on_fire.tr(),
+                              text: character.streak == 0
+                                  ? LocaleKeys.home_total_streak_begin.tr()
+                                  : LocaleKeys.home_total_streak_on_fire.tr(),
+                              style: textTheme.bodySmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ],
                         ),
@@ -127,23 +137,21 @@ class CharacterCard extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: .spaceBetween,
                           children: [
-                            Text(character.progress.currentExpFormatted),
+                            Text(character.currentExp.round().commaSeparated),
                             Text(
-                              '/${LocaleKeys.home_exp.tr(namedArgs: {"exp": character.progress.maxExpFormatted})}',
+                              '/${LocaleKeys.home_exp.tr(namedArgs: {"exp": character.levelExp.commaSeparated})}',
                               style: textTheme.labelSmall,
                             ),
                           ],
                         ),
                         const SizedBox(height: AppPaddings.s),
-                        LinearProgressIndicator(
-                          value: character.progress.progress,
-                        ),
+                        LinearProgressIndicator(value: character.levelProgress),
                         const SizedBox(height: AppPaddings.s),
                         Text(
                           LocaleKeys.home_exp_to_next_level.tr(
                             namedArgs: {
-                              "current": character.progress.remainProgress,
-                              "level": character.progress.nextLevel.toString(),
+                              "remain": character.remainExp.commaSeparated,
+                              "level": character.nextLevel.commaSeparated,
                             },
                           ),
                           style: textTheme.labelSmall,
@@ -161,46 +169,25 @@ class CharacterCard extends ConsumerWidget {
   }
 }
 
-extension on CharacterProgress {
-  String get maxExpFormatted {
-    final formatter = NumberFormat('#,###', 'en_US');
-    return formatter.format(maxExp);
-  }
-
-  String get currentExpFormatted {
-    final formatter = NumberFormat('#,###', 'en_US');
-    return formatter.format(currentExp);
-  }
-
-  double get progress {
-    return currentExp / maxExp;
-  }
-
-  String get remainProgress {
-    return (maxExp - currentExp).toStringAsFixed(0);
-  }
-
-  int get nextLevel {
-    return level + 1;
-  }
-}
-
 extension on Character {
-  String get levelDescription => switch (tier) {
-    .peasant => LocaleKeys.home_level_peasant.tr(
-      namedArgs: {'level': progress.level.toString()},
-    ),
-    .ragged => LocaleKeys.home_level_ragged_knight.tr(
-      namedArgs: {'level': progress.level.toString()},
-    ),
-    .steel => LocaleKeys.home_level_steel_knight.tr(
-      namedArgs: {'level': progress.level.toString()},
-    ),
-    .veteran => LocaleKeys.home_level_veteran_paladin.tr(
-      namedArgs: {'level': progress.level.toString()},
-    ),
-    .grandmaster => LocaleKeys.home_level_grandmaster.tr(
-      namedArgs: {'level': progress.level.toString()},
-    ),
-  };
+  String get levelDescription {
+    final cLevel = level.toString();
+    return switch (tier) {
+      .peasant => LocaleKeys.home_level_peasant.tr(
+        namedArgs: {'level': cLevel},
+      ),
+      .ragged => LocaleKeys.home_level_ragged_knight.tr(
+        namedArgs: {'level': cLevel},
+      ),
+      .steel => LocaleKeys.home_level_steel_knight.tr(
+        namedArgs: {'level': cLevel},
+      ),
+      .veteran => LocaleKeys.home_level_veteran_paladin.tr(
+        namedArgs: {'level': cLevel},
+      ),
+      .grandmaster => LocaleKeys.home_level_grandmaster.tr(
+        namedArgs: {'level': cLevel},
+      ),
+    };
+  }
 }

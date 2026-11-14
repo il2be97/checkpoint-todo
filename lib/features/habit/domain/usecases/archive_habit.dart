@@ -3,23 +3,19 @@ import 'package:checkpoint/features/habit/domain/repositories/habits_repository.
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'toggle_habit_archive.g.dart';
+part 'archive_habit.g.dart';
 
-class ToggleHabitArchive {
+class ArchiveHabit {
   final IHabitsRepository habitsRepository;
 
-  ToggleHabitArchive(this.habitsRepository);
+  ArchiveHabit(this.habitsRepository);
 
   TaskEither<Error, Habit> call(Habit habit) {
-    return habitsRepository.update(
-      habit.copyWith(
-        archivedDate: habit.archivedDate == null ? DateTime.now() : null,
-      ),
-    );
+    return habitsRepository.update(habit.archive());
   }
 }
 
 @riverpod
-ToggleHabitArchive toggleHabitArchive(Ref ref) {
-  return ToggleHabitArchive(ref.read(habitRepositoryProvider));
+ArchiveHabit archiveHabit(Ref ref) {
+  return ArchiveHabit(ref.read(habitRepositoryProvider));
 }

@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:checkpoint/features/habit/domain/entities/habit_colors.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit_color.dart';
 import 'package:checkpoint/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-extension HAbitColorsX on HabitColors {
+extension HabitColorX on HabitColor {
   Color get background {
     return switch (this) {
       .lavender => const Color(0xFF302B40),

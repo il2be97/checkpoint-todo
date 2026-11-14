@@ -4,8 +4,10 @@ import 'package:checkpoint/features/habit/domain/usecases/create_habit.dart';
 import 'package:checkpoint/features/habit/domain/usecases/delete_habit.dart';
 import 'package:checkpoint/features/habit/domain/usecases/load_habits.dart';
 import 'package:checkpoint/features/habit/domain/usecases/toggle_habit_active.dart';
-import 'package:checkpoint/features/habit/domain/usecases/toggle_habit_archive.dart';
+import 'package:checkpoint/features/habit/domain/usecases/archive_habit.dart';
+import 'package:checkpoint/features/habit/domain/usecases/undo_archive_habit.dart';
 import 'package:checkpoint/features/habit/domain/usecases/update_habit.dart';
+import 'package:checkpoint/features/habit/presentation/provider/daily_habit_syc.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'habits_notifier.g.dart';
@@ -14,20 +16,25 @@ part 'habits_notifier.g.dart';
 class HabitsNotifier extends _$HabitsNotifier {
   @override
   FutureOr<List<Habit>> build() async {
-    return _loadHabits();
+    final summary = await ref.watch(dailyHabitSyncProvider.future);
+    return summary.habits;
   }
 
   List<Habit> get _currentHabits => state.value ?? [];
 
   Future<void> load() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() => _loadHabits());
-  }
+    state = const .loading();
 
-  Future<List<Habit>> _loadHabits() async {
-    final resp = await ref.read(loadHabitsProvider)(DateTime.now()).run();
+    final resp = await ref
+        .read(loadHabitsProvider)
+        .call()
+        .delay(const Duration(milliseconds: 300))
+        .run();
 
-    return resp.fold((err) => throw err, (habits) => habits);
+    state = resp.fold(
+      (err) => .error(err, StackTrace.current),
+      (habits) => .data(habits),
+    );
   }
 
   Future<void> create(Habit habit) async {
@@ -42,10 +49,10 @@ class HabitsNotifier extends _$HabitsNotifier {
     );
   }
 
-  Future<void> toggleActive(Habit habit) async {
+  Future<void> archive(Habit habit) async {
     state = const .loading();
 
-    final resp = await ref.read(toggleHabitActiveProvider).call(habit).run();
+    final resp = await ref.read(archiveHabitProvider).call(habit).run();
 
     state = resp.fold(
       (err) => .error(err, StackTrace.current),
@@ -55,9 +62,24 @@ class HabitsNotifier extends _$HabitsNotifier {
     );
   }
 
-  Future<void> toggleArchive(Habit habit) async {
+  Future<void> undoArchive(Habit habit) async {
     state = const .loading();
-    final resp = await ref.read(toggleHabitArchiveProvider).call(habit).run();
+    final resp = await ref.read(undoArchiveHabitProvider).call(habit).run();
+
+    state = resp.fold(
+      (err) => .error(err, StackTrace.current),
+      (newHabit) => .data([
+        for (final h in _currentHabits) h.id == newHabit.id ? newHabit : h,
+      ]),
+    );
+  }
+
+  Future<void> toggleActive(Habit habit) async {
+    state = const .loading();
+    final resp = await ref
+        .read(toggleHabitActiveProvider)
+        .call(habit, shouldPause: !habit.isPausedToday)
+        .run();
 
     state = resp.fold(
       (err) => .error(err, StackTrace.current),

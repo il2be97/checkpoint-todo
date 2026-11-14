@@ -5,6 +5,7 @@
 abstract class  LocaleKeys {
   static const nav_home = 'nav.home';
   static const nav_habits = 'nav.habits';
+  static const nav_settings = 'nav.settings';
   static const nav = 'nav';
   static const home_title = 'home.title';
   static const home_subtitle = 'home.subtitle';
@@ -14,6 +15,7 @@ abstract class  LocaleKeys {
   static const home_level_veteran_paladin = 'home.level_veteran_paladin';
   static const home_level_grandmaster = 'home.level_grandmaster';
   static const home_total_streak = 'home.total_streak';
+  static const home_total_streak_begin = 'home.total_streak_begin';
   static const home_total_streak_on_fire = 'home.total_streak_on_fire';
   static const home_exp = 'home.exp';
   static const home_exp_to_next_level = 'home.exp_to_next_level';
@@ -125,5 +127,25 @@ abstract class  LocaleKeys {
   static const habit_options_character_grandmaster_description = 'habit_options.character.grandmaster_description';
   static const habit_options_character = 'habit_options.character';
   static const habit_options = 'habit_options';
+  static const character_info_card_description = 'character_info_card.description';
+  static const character_info_card_moto = 'character_info_card.moto';
+  static const character_info_card = 'character_info_card';
+  static const settings_title = 'settings.title';
+  static const settings_subtitle = 'settings.subtitle';
+  static const settings_reminders_title = 'settings.reminders.title';
+  static const settings_reminders_daily_title = 'settings.reminders.daily.title';
+  static const settings_reminders_daily_subtitle = 'settings.reminders.daily.subtitle';
+  static const settings_reminders_daily = 'settings.reminders.daily';
+  static const settings_reminders_hp_rist_title = 'settings.reminders.hp_rist.title';
+  static const settings_reminders_hp_rist_subtitle = 'settings.reminders.hp_rist.subtitle';
+  static const settings_reminders_hp_rist = 'settings.reminders.hp_rist';
+  static const settings_reminders = 'settings.reminders';
+  static const settings_support_title = 'settings.support.title';
+  static const settings_support_help_title = 'settings.support.help.title';
+  static const settings_support_help = 'settings.support.help';
+  static const settings_support_privacy_title = 'settings.support.privacy.title';
+  static const settings_support_privacy = 'settings.support.privacy';
+  static const settings_support = 'settings.support';
+  static const settings = 'settings';
 
 }

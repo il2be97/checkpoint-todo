@@ -3,33 +3,20 @@ import 'package:checkpoint/features/character/domain/entities/character.dart';
 
 extension CharacterMapper on Character {
   CharacterDTO toDTO() => CharacterDTO(
-    maxHealth: maxHealth,
     health: health,
     name: name,
     streak: streak,
-    progress: progress.toDTO(),
+    id: id,
+    totalExp: totalExp,
   );
 }
 
 extension CharacterDTOMapper on CharacterDTO {
   Character toEntity() => Character(
-    maxHealth: maxHealth,
     health: health,
     streak: streak,
     name: name,
-    progress: progress.toEntity(),
+    id: id,
+    totalExp: totalExp,
   );
-}
-
-extension CharacterProgressMapper on CharacterProgress {
-  CharacterProgressDTO toDTO() => CharacterProgressDTO(
-    maxExp: maxExp,
-    currentExp: currentExp,
-    level: level,
-  );
-}
-
-extension CharacterProgressDTOMapper on CharacterProgressDTO {
-  CharacterProgress toEntity() =>
-      CharacterProgress(maxExp: maxExp, currentExp: currentExp, level: level);
 }

@@ -3,8 +3,8 @@ import 'package:checkpoint/core/theme/app_icons.dart';
 import 'package:checkpoint/core/theme/app_paddings.dart';
 import 'package:checkpoint/core/theme/color_scheme.dart';
 import 'package:checkpoint/features/habit/domain/entities/habit.dart';
-import 'package:checkpoint/features/habit/domain/entities/habit_colors.dart';
-import 'package:checkpoint/features/habit/domain/entities/habit_icons.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit_color.dart';
+import 'package:checkpoint/features/habit/domain/entities/habit_icon.dart';
 import 'package:checkpoint/core/models/time.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_colors_helper.dart';
 import 'package:checkpoint/features/habit/presentation/helpers/habit_icons_helper.dart';
@@ -58,8 +58,8 @@ class _Popup extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final icon = useState<HabitIcons>(habit?.icon ?? .book);
-    final color = useState<HabitColors>(habit?.color ?? .lavender);
+    final icon = useState<HabitIcon>(habit?.icon ?? .book);
+    final color = useState<HabitColor>(habit?.color ?? .lavender);
     final time = useState<TimeOfDay?>(habit?.notificationTime?.toTimeOfDay());
 
     final title = useState<String>(habit?.title ?? "");
@@ -78,8 +78,8 @@ class _Popup extends HookConsumerWidget {
 
     final textFieldFocusNode = useFocusNode();
 
-    void setIcon(HabitIcons newIcon) => icon.value = newIcon;
-    void setColor(HabitColors newColor) => color.value = newColor;
+    void setIcon(HabitIcon newIcon) => icon.value = newIcon;
+    void setColor(HabitColor newColor) => color.value = newColor;
     void setTime(TimeOfDay? newTime) => time.value = newTime;
 
     void onSavePressed() {
@@ -303,7 +303,7 @@ class _InputField extends StatelessWidget {
 
   final TextEditingController controller;
   final FocusNode focusNode;
-  final HabitColors color;
+  final HabitColor color;
 
   @override
   Widget build(BuildContext context) {
@@ -324,14 +324,14 @@ class _InputField extends StatelessWidget {
 class _ColorButtons extends StatelessWidget {
   const _ColorButtons({required this.onChanged, required this.selected});
 
-  final ValueSetter<HabitColors> onChanged;
-  final HabitColors selected;
+  final ValueSetter<HabitColor> onChanged;
+  final HabitColor selected;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       spacing: AppPaddings.m,
-      children: HabitColors.values
+      children: HabitColor.values
           .map(
             (color) => _ColorButton(
               onTap: () => onChanged(color),
@@ -353,7 +353,7 @@ class _ColorButton extends StatelessWidget {
 
   final VoidCallback onTap;
   final bool isSelected;
-  final HabitColors color;
+  final HabitColor color;
 
   @override
   Widget build(BuildContext context) {
@@ -385,15 +385,15 @@ class _IconButtons extends StatelessWidget {
     required this.activeColor,
   });
 
-  final ValueSetter<HabitIcons> onChanged;
-  final HabitIcons selected;
-  final HabitColors activeColor;
+  final ValueSetter<HabitIcon> onChanged;
+  final HabitIcon selected;
+  final HabitColor activeColor;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       spacing: AppPaddings.m,
-      children: HabitIcons.values
+      children: HabitIcon.values
           .map(
             (icon) => _IconButton(
               onTap: () => onChanged(icon),
@@ -417,8 +417,8 @@ class _IconButton extends StatelessWidget {
 
   final VoidCallback onTap;
   final bool isSelected;
-  final HabitIcons icon;
-  final HabitColors color;
+  final HabitIcon icon;
+  final HabitColor color;
 
   @override
   Widget build(BuildContext context) {
@@ -457,7 +457,7 @@ class _NotificationField extends StatelessWidget {
   });
 
   final ValueSetter<TimeOfDay> onChanged;
-  final HabitColors color;
+  final HabitColor color;
   final TimeOfDay time;
 
   @override

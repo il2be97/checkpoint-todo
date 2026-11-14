@@ -14,8 +14,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum HabitTab { active, archived }
 
-typedef HabitEmptyCardBuilder =
-    Widget Function(BuildContext context, HabitTab tab);
+typedef HabitEmptyCardBuilder = Widget Function(
+  BuildContext context,
+  HabitTab tab,
+);
 
 // MARK: - Page
 class HabitsPage extends ConsumerStatefulWidget {
@@ -110,13 +112,13 @@ class _HabitsPageState extends ConsumerState<HabitsPage>
             children: [
               const SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(AppPaddings.l),
+                  padding: EdgeInsets.all(AppPaddings.m),
                   child: ActiveHabitsSection(),
                 ),
               ),
               SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(AppPaddings.l),
+                  padding: const EdgeInsets.all(AppPaddings.m),
                   child: ArchivedHabitsSection(
                     onActiveHabbitsTapped: () =>
                         _tabController.animateTo(HabitTab.active.index),

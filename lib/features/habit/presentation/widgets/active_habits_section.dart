@@ -91,7 +91,7 @@ class ActiveHabitsSection extends ConsumerWidget {
                       (habit) => _ActiveHabitCell(
                         habit,
                         onEdit: ref.habitsNotifier.edit,
-                        onArchive: ref.habitsNotifier.toggleArchive,
+                        onArchive: ref.habitsNotifier.archive,
                         onDelete: ref.habitsNotifier.delete,
                         onToggleActive: ref.habitsNotifier.toggleActive,
                       ),

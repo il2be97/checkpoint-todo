@@ -2,6 +2,7 @@ import 'package:checkpoint/features/dashboard/presentation/pages/dashboard_page.
 import 'package:checkpoint/features/character/presentation/pages/character_evolution_page.dart';
 import 'package:checkpoint/features/habit/presentation/pages/habits_page.dart';
 import 'package:checkpoint/features/home/presentation/pages/home_page.dart';
+import 'package:checkpoint/features/settings/presentation/page/settings_page.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
@@ -35,15 +36,16 @@ final GoRouter router = GoRouter(
             ),
           ],
         ),
-        // TODO: - return back later.
-        // StatefulShellBranch(
-        //   routes: [
-        //     GoRoute(
-        //       path: '/settings',
-        //       builder: (context, state) => Container(color: Colors.yellow),
-        //     ),
-        //   ],
-        // ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/settings',
+              name: 'settings',
+              builder: (context, state) => const SettingsPage(),
+            ),
+          ],
+        ),
       ],
     ),
   ],
